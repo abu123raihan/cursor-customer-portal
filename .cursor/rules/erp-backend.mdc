@@ -1,0 +1,30 @@
+---
+description: Backend ERP standards
+globs:
+  - "cursor-node-api/**/*.ts"
+  - "src/**/*.ts"
+alwaysApply: false
+---
+
+# BACKEND
+
+Use Node.js + Express + TypeScript + Sequelize + MySQL.
+
+Controllers are thin.
+Services contain business logic.
+Repositories contain database access where applicable.
+Validators validate external input.
+Routes define HTTP contracts.
+
+Use transactions for operations affecting multiple domain records.
+
+Apply:
+authentication
+authorization
+tenant isolation
+validation
+audit logging
+
+Do not expose raw database errors.
+
+Do not use client company_id as the security boundary.

@@ -1,0 +1,27 @@
+<section class="page">
+  <h1>API health</h1>
+  <p>Calls the documented <code>GET /health</code> contract. No invented endpoints.</p>
+
+  @if (state() === "loading") {
+    <p class="status">Loading…</p>
+  }
+
+  @if (state() === "empty") {
+    <p class="status">No health payload returned.</p>
+  }
+
+  @if (state() === "error") {
+    <p class="status status--error" role="alert">{{ errorMessage() }}</p>
+  }
+
+  @if (state() === "ready" && health(); as status) {
+    <dl>
+      <dt>Status</dt>
+      <dd>{{ status.status }}</dd>
+      <dt>Service</dt>
+      <dd>{{ status.service }}</dd>
+    </dl>
+  }
+
+  <button type="button" (click)="refresh()">Retry</button>
+</section>

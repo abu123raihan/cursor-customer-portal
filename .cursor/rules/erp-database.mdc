@@ -1,0 +1,29 @@
+---
+description: ERP database and multi-tenant database standards
+alwaysApply: false
+---
+
+# DATABASE
+
+Use MySQL + Sequelize.
+
+Prefer UUID or the project's approved key strategy consistently.
+
+Company-owned tables must have tenant/company ownership.
+
+Use:
+primary keys
+foreign keys
+unique constraints
+indexes
+timestamps
+audit fields
+appropriate soft-delete strategy where required
+
+Use migrations.
+
+Prefer additive schema changes.
+
+Do not drop or rename production columns without an explicit migration strategy.
+
+Inventory and accounting data require strong transactional integrity.
