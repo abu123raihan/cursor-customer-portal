@@ -1,0 +1,68 @@
+.wrap {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.page {
+  padding: 2.5rem 0 3rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #e65100;
+}
+
+h1,
+h2 {
+  font-family: "Rajdhani", sans-serif;
+  color: #0d47a1;
+}
+
+h1 {
+  margin: 0.35rem 0 0.75rem;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+}
+
+p,
+li {
+  color: #546e7a;
+}
+
+ul {
+  margin: 1rem 0 1.5rem;
+  padding-left: 1.1rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e3eaf1;
+  border-radius: 4px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: 0 10px 24px rgba(13, 33, 55, 0.06);
+}
+
+.hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: #90a4ae;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,11 +1,70 @@
-:root {
-  font-family: Georgia, "Times New Roman", serif;
-  color: #1c1917;
-  background: #f7f4ef;
+@use "@angular/material" as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$green-palette,
+        tertiary: mat.$red-palette
+      ),
+      typography: Roboto,
+      density: 0
+    )
+  );
 }
 
-* { box-sizing: border-box; }
-body { margin: 0; }
-h1 { font-family: "Segoe UI", sans-serif; }
-.empty { color: #57534e; }
-a { color: #1d6b64; }
+:root {
+  /* Emporium green theme — https://www.emporium.themeseason.com */
+  --emp-primary: #689f38;
+  --emp-primary-dark: #558b2f;
+  --emp-primary-light: #dcedc8;
+  --emp-warn: #f44336;
+  --emp-star: #fbc02d;
+  --emp-muted: rgba(0, 0, 0, 0.54);
+  --emp-ink: rgba(0, 0, 0, 0.87);
+  --emp-surface: #fafafa;
+  --emp-card: #ffffff;
+  color-scheme: light;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: var(--emp-ink);
+  background: var(--emp-surface);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--emp-surface);
+}
+
+a {
+  color: var(--emp-primary);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.text-muted {
+  color: var(--emp-muted) !important;
+}
+
+.primary-color {
+  color: var(--emp-primary);
+}
+
+.app.green {
+  min-height: 100vh;
+  background: var(--emp-surface);
+}
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #33691e;
+  --mdc-snackbar-supporting-text-color: #fff;
+}

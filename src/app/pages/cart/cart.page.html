@@ -1,0 +1,58 @@
+<section class="wrap page">
+  <header class="head">
+    <div>
+      <p class="eyebrow">Your bag</p>
+      <h1>Shopping cart</h1>
+      <p>Guest carts stay on this device. Sign in at checkout for invoices.</p>
+    </div>
+    @if (count() > 0) {
+      <button mat-stroked-button type="button" (click)="clear()">Clear cart</button>
+    }
+  </header>
+
+  @if (lines().length === 0) {
+    <div class="empty">
+      <mat-icon>shopping_cart</mat-icon>
+      <h2>Your cart is empty</h2>
+      <p>Browse switches, lighting, cables, and more.</p>
+      <a mat-flat-button color="primary" routerLink="/shop">Continue shopping</a>
+    </div>
+  } @else {
+    <div class="layout">
+      <div class="lines">
+        @for (line of lines(); track line.product.id) {
+          <article class="line">
+            <a [routerLink]="['/product', line.product.slug]" class="thumb">
+              <img [src]="line.product.image" [alt]="line.product.name" />
+            </a>
+            <div class="meta">
+              <a [routerLink]="['/product', line.product.slug]">{{ line.product.name }}</a>
+              <p>{{ line.product.sku }} · {{ line.product.brand }}</p>
+              <p class="price">
+                {{ line.product.price | currency: line.product.currency : "symbol" : "1.0-0" }}
+              </p>
+            </div>
+            <div class="qty">
+              <button mat-stroked-button type="button" (click)="setQty(line.product.id, line.quantity - 1)">−</button>
+              <span>{{ line.quantity }}</span>
+              <button mat-stroked-button type="button" (click)="setQty(line.product.id, line.quantity + 1)">+</button>
+            </div>
+            <div class="total">
+              <strong>{{ line.lineTotal | currency: line.product.currency : "symbol" : "1.0-0" }}</strong>
+              <button mat-button type="button" color="warn" (click)="remove(line.product.id)">Remove</button>
+            </div>
+          </article>
+        }
+      </div>
+
+      <aside class="summary">
+        <h2>Order summary</h2>
+        <p><span>Items</span><span>{{ count() }}</span></p>
+        <p><span>Subtotal</span><strong>{{ subtotal() | currency: "INR" : "symbol" : "1.0-0" }}</strong></p>
+        <p class="note">Taxes and shipping are calculated at checkout after you sign in.</p>
+        <a mat-flat-button color="accent" routerLink="/account">Sign in to checkout</a>
+        <a mat-stroked-button routerLink="/shop">Continue shopping</a>
+      </aside>
+    </div>
+  }
+</section>

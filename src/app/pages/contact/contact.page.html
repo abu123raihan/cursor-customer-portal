@@ -1,0 +1,60 @@
+<section class="wrap page">
+  <header>
+    <p class="eyebrow">Get in touch</p>
+    <h1>Contact AK Electricals</h1>
+  </header>
+
+  <div class="layout">
+    <aside class="info">
+      <article>
+        <mat-icon>location_on</mat-icon>
+        <div>
+          <h3>Showroom & warehouse</h3>
+          <p>{{ brand.address }}</p>
+        </div>
+      </article>
+      <article>
+        <mat-icon>call</mat-icon>
+        <div>
+          <h3>Phone</h3>
+          <p>{{ brand.phone }}</p>
+        </div>
+      </article>
+      <article>
+        <mat-icon>mail_outline</mat-icon>
+        <div>
+          <h3>Email</h3>
+          <p>{{ brand.email }}</p>
+        </div>
+      </article>
+      <article>
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <h3>Hours</h3>
+          <p>{{ brand.hours }}</p>
+        </div>
+      </article>
+    </aside>
+
+    <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+      <h2>Send a message</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Your name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Message</mat-label>
+        <textarea matInput rows="5" formControlName="message"></textarea>
+      </mat-form-field>
+      <button mat-flat-button color="primary" type="submit">Send message</button>
+    </form>
+  </div>
+</section>

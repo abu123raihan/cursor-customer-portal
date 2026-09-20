@@ -1,0 +1,71 @@
+@if (product(); as product) {
+  <section class="wrap page">
+    <nav class="crumbs">
+      <a routerLink="/">Home</a>
+      <span>/</span>
+      @if (category(); as category) {
+        <a [routerLink]="['/shop', category.slug]">{{ category.name }}</a>
+        <span>/</span>
+      }
+      <span>{{ product.name }}</span>
+    </nav>
+
+    <div class="detail">
+      <div class="media">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="info">
+        <p class="brand">{{ product.brand }} · {{ product.sku }}</p>
+        <h1>{{ product.name }}</h1>
+        <p class="rating"><mat-icon>star</mat-icon> {{ product.rating }} ({{ product.reviewCount }} reviews)</p>
+        <p class="price">
+          <strong>{{ product.price | currency: product.currency : "symbol" : "1.0-0" }}</strong>
+          @if (product.compareAtPrice) {
+            <s>{{ product.compareAtPrice | currency: product.currency : "symbol" : "1.0-0" }}</s>
+          }
+          <span>/ {{ product.unit }}</span>
+        </p>
+        <p class="desc">{{ product.description }}</p>
+        <ul>
+          @for (feature of product.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+        <div class="buy">
+          <div class="qty">
+            <button mat-stroked-button type="button" (click)="bump(-1)">−</button>
+            <span>{{ quantity() }}</span>
+            <button mat-stroked-button type="button" (click)="bump(1)">+</button>
+          </div>
+          <button mat-flat-button color="primary" type="button" (click)="addToCart()">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Add to cart
+          </button>
+          <button mat-stroked-button type="button" (click)="toggleWish()">
+            <mat-icon>{{ wished() ? "favorite" : "favorite_border" }}</mat-icon>
+            Wishlist
+          </button>
+        </div>
+        <p class="stock" [class.out]="!product.inStock">
+          {{ product.inStock ? "In stock — ready to dispatch" : "Currently out of stock" }}
+        </p>
+      </div>
+    </div>
+
+    @if (related().length) {
+      <div class="related">
+        <h2>Related products</h2>
+        <div class="product-grid">
+          @for (item of related(); track item.id) {
+            <app-product-card [product]="item" />
+          }
+        </div>
+      </div>
+    }
+  </section>
+} @else {
+  <section class="wrap page">
+    <h1>Product not found</h1>
+    <a mat-flat-button color="primary" routerLink="/shop">Back to shop</a>
+  </section>
+}

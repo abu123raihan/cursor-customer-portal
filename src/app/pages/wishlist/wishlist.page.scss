@@ -1,0 +1,89 @@
+.wrap {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.page {
+  padding: 2rem 0 3rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #e65100;
+}
+
+h1,
+h2 {
+  font-family: "Rajdhani", sans-serif;
+  color: #0d47a1;
+}
+
+.empty {
+  margin-top: 1rem;
+  text-align: center;
+  padding: 3rem 1rem;
+  background: #fff;
+  border: 1px solid #e3eaf1;
+  border-radius: 4px;
+}
+
+.empty mat-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #90a4ae;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+article {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #e3eaf1;
+  border-radius: 4px;
+  padding: 0.85rem;
+}
+
+img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+article a {
+  color: #0d47a1;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.15rem;
+}
+
+article p {
+  margin: 0.35rem 0 0.75rem;
+  color: #1565c0;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

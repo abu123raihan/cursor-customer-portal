@@ -1,10 +1,122 @@
-<section class="page">
-  <h1>Storefront</h1>
-  <p>This Angular app is the public site. It talks only to cursor-node-api and must stay mobile-friendly.</p>
-  <ul>
-    <li>Catalog, cart, checkout, and CMS wait for the Website module.</li>
-    <li>Shopper identity is separate from staff login.</li>
-    <li>Tenant is resolved by host or store key on the server, not by a shopper-supplied company id.</li>
-  </ul>
-  <p class="muted">Loading, empty, error, and validation states are required on every future screen.</p>
+<section class="hero" aria-label="Featured promotions">
+  @for (slide of slides; track slide.title; let i = $index) {
+    <article class="slide" [class.active]="slideIndex() === i" [style.background-image]="'url(' + slide.image + ')'">
+      <div class="overlay">
+        <div class="wrap copy">
+          <p class="eyebrow">{{ slide.eyebrow }}</p>
+          <h1>{{ slide.title }}</h1>
+          <p class="lead">{{ slide.text }}</p>
+          <a mat-flat-button color="accent" [routerLink]="slide.link">{{ slide.cta }}</a>
+        </div>
+      </div>
+    </article>
+  }
+  <div class="hero-controls wrap">
+    <button mat-mini-fab type="button" color="primary" aria-label="Previous slide" (click)="prev()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <div class="dots">
+      @for (slide of slides; track slide.title; let i = $index) {
+        <button type="button" [class.active]="slideIndex() === i" [attr.aria-label]="'Go to slide ' + (i + 1)" (click)="go(i)"></button>
+      }
+    </div>
+    <button mat-mini-fab type="button" color="primary" aria-label="Next slide" (click)="next()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</section>
+
+<section class="wrap features">
+  <article>
+    <mat-icon>verified</mat-icon>
+    <div>
+      <h3>ISI-marked stock</h3>
+      <p>Quality-checked inventory for site and retail installs.</p>
+    </div>
+  </article>
+  <article>
+    <mat-icon>local_shipping</mat-icon>
+    <div>
+      <h3>Fast dispatch</h3>
+      <p>Same-day courier from Pune on orders before 2 PM.</p>
+    </div>
+  </article>
+  <article>
+    <mat-icon>support_agent</mat-icon>
+    <div>
+      <h3>Trade support</h3>
+      <p>Dedicated desk for electricians and contractors.</p>
+    </div>
+  </article>
+  <article>
+    <mat-icon>receipt_long</mat-icon>
+    <div>
+      <h3>GST invoices</h3>
+      <p>Account checkout unlocks invoices and order history.</p>
+    </div>
+  </article>
+</section>
+
+<section class="wrap section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Collections</p>
+      <h2>Shop by category</h2>
+    </div>
+    <a mat-stroked-button color="primary" routerLink="/shop">View all</a>
+  </div>
+  <div class="category-grid">
+    @for (category of catalog.allCategories(); track category.id) {
+      <a class="category-card" [routerLink]="['/shop', category.slug]">
+        <img [src]="category.image" [alt]="category.name" loading="lazy" />
+        <div>
+          <h3>{{ category.name }}</h3>
+          <p>{{ category.description }}</p>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+
+<section class="wrap section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Featured</p>
+      <h2>Bestsellers this week</h2>
+    </div>
+    <a mat-stroked-button color="primary" routerLink="/shop">Shop products</a>
+  </div>
+  <div class="product-grid">
+    @for (product of catalog.featured(); track product.id) {
+      <app-product-card [product]="product" />
+    }
+  </div>
+</section>
+
+<section class="promo wrap">
+  <div class="promo-copy">
+    <p class="eyebrow">Contractor pack</p>
+    <h2>Wire coils + MCBs ready for site kits</h2>
+    <p>Build a cart as a guest. Sign in only when you need checkout and invoice download.</p>
+    <a mat-flat-button color="accent" routerLink="/shop/wires-cables">Browse wires & cables</a>
+  </div>
+  <img
+    src="https://images.unsplash.com/photo-1473341304170-971dccb5ce1e?auto=format&fit=crop&w=1000&q=80"
+    alt="Electrical cables on site"
+    loading="lazy"
+  />
+</section>
+
+<section class="wrap section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">New arrivals</p>
+      <h2>Fresh stock on the floor</h2>
+    </div>
+  </div>
+  <div class="product-grid">
+    @for (product of catalog.newArrivals(); track product.id) {
+      <app-product-card [product]="product" />
+    }
+  </div>
 </section>

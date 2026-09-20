@@ -1,0 +1,216 @@
+.wrap {
+  width: min(1280px, calc(100% - 24px));
+  margin-inline: auto;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 16px auto;
+  width: min(1280px, calc(100% - 24px));
+  padding: 12px 16px;
+  background: #eee;
+  border-radius: 4px;
+  box-shadow: none;
+  font-size: 14px;
+}
+
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #689f38;
+  text-decoration: none;
+}
+
+.breadcrumb mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.breadcrumb strong {
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.shop-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding-bottom: 24px;
+}
+
+.filter-sidenav {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
+    rgba(0, 0, 0, 0.14) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+  padding: 16px;
+}
+
+.filter-sidenav h3 {
+  margin: 16px 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.filter-sidenav h3:first-child {
+  margin-top: 0;
+}
+
+.cat-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cat-tree a {
+  color: rgba(0, 0, 0, 0.75);
+  text-decoration: none;
+  padding: 6px 4px;
+  font-size: 14px;
+}
+
+.cat-tree a.active,
+.cat-tree a:hover {
+  color: #689f38;
+  font-weight: 500;
+}
+
+.price-filter p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.size-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.size-chip {
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.size-chip:hover {
+  border-color: #689f38;
+  color: #689f38;
+}
+
+.brand-banner {
+  margin-top: 20px;
+  padding: 20px 12px;
+  background: linear-gradient(135deg, #689f38, #33691e);
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.brand-banner p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.brand-banner strong {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.products-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 1px 1px -1px,
+    rgba(0, 0, 0, 0.14) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 2px 0px;
+}
+
+.products-toolbar mat-form-field {
+  width: 180px;
+}
+
+.view-toggles {
+  margin-left: auto;
+  display: flex;
+}
+
+.view-toggles button.active {
+  color: #689f38;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.product-grid.dense {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.product-grid.list {
+  grid-template-columns: 1fr;
+}
+
+.empty {
+  padding: 24px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+@media (max-width: 1024px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-sidenav {
+    display: none;
+  }
+
+  .product-grid,
+  .product-grid.dense {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid,
+  .product-grid.dense {
+    grid-template-columns: 1fr;
+  }
+}

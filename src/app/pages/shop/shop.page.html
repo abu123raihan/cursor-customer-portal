@@ -1,0 +1,108 @@
+<section class="shop-page">
+  <mat-card class="breadcrumb light-block">
+    <a routerLink="/"><mat-icon>home</mat-icon> Homepage</a>
+    <span>»</span>
+    <a routerLink="/shop">All Products</a>
+    <span>»</span>
+    <strong>{{ title() }}</strong>
+  </mat-card>
+
+  <div class="shop-layout wrap">
+    <aside class="filter-sidenav">
+      <h3>CATEGORIES</h3>
+      <div class="cat-tree">
+        <a routerLink="/shop" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All Categories</a>
+        @for (category of catalog.allCategories(); track category.id) {
+          <a [routerLink]="['/shop', category.slug]" routerLinkActive="active">{{ category.name }}</a>
+        }
+      </div>
+
+      <h3>PRICE</h3>
+      <div class="price-filter">
+        <p>From: ${{ priceMin() }}</p>
+        <mat-slider min="0" max="3000" step="10" discrete>
+          <input
+            matSliderStartThumb
+            [ngModel]="priceMin()"
+            (ngModelChange)="priceMin.set($event)"
+            name="priceMin"
+          />
+          <input
+            matSliderEndThumb
+            [ngModel]="priceMax()"
+            (ngModelChange)="priceMax.set($event)"
+            name="priceMax"
+          />
+        </mat-slider>
+        <p>To: ${{ priceMax() }}</p>
+      </div>
+
+      <h3>COLOR</h3>
+      <div class="color-grid">
+        @for (color of colors; track color) {
+          <button type="button" class="swatch" [style.background]="color" [attr.aria-label]="color"></button>
+        }
+      </div>
+
+      <h3>SIZE</h3>
+      <div class="size-grid">
+        @for (size of sizes; track size) {
+          <button type="button" class="size-chip">{{ size }}</button>
+        }
+      </div>
+
+      <h3>CONDITION</h3>
+      <mat-checkbox checked>New</mat-checkbox>
+      <mat-checkbox>Used</mat-checkbox>
+      <mat-checkbox>Not Specified</mat-checkbox>
+
+      <div class="brand-banner">
+        <p>NOW STARTING AT</p>
+        <strong>$1379</strong>
+      </div>
+    </aside>
+
+    <div class="products-pane">
+      <div class="products-toolbar">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-select [value]="sort()" (selectionChange)="sort.set($event.value)">
+            <mat-option value="default">Sort by Default</mat-option>
+            <mat-option value="price-asc">Price: low to high</mat-option>
+            <mat-option value="price-desc">Price: high to low</mat-option>
+            <mat-option value="name">Name</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-select [value]="pageSize()" (selectionChange)="pageSize.set($event.value)">
+            <mat-option [value]="12">Show 12</mat-option>
+            <mat-option [value]="24">Show 24</mat-option>
+            <mat-option [value]="48">Show 48</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="view-toggles">
+          <button mat-icon-button type="button" [class.active]="view() === 'list'" (click)="view.set('list')">
+            <mat-icon>view_list</mat-icon>
+          </button>
+          <button mat-icon-button type="button" [class.active]="view() === 'grid'" (click)="view.set('grid')">
+            <mat-icon>view_module</mat-icon>
+          </button>
+          <button mat-icon-button type="button" [class.active]="view() === 'comfortable'" (click)="view.set('comfortable')">
+            <mat-icon>view_comfy</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (products().length === 0) {
+        <p class="empty text-muted">No products match this filter.</p>
+      } @else {
+        <div class="product-grid" [class.list]="view() === 'list'" [class.dense]="view() === 'grid'">
+          @for (product of products(); track product.id) {
+            <app-product-card [product]="product" />
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,129 @@
+<div class="app green">
+  <mat-sidenav-container class="pages-container">
+    <mat-sidenav mode="over" [opened]="mobileOpen()" (closedStart)="mobileOpen.set(false)" class="mobile-nav">
+      <div class="mobile-head">
+        <strong>{{ brand.name }}</strong>
+        <button mat-icon-button type="button" (click)="closeMobile()"><mat-icon>close</mat-icon></button>
+      </div>
+          <a routerLink="/home" (click)="closeMobile()">HOME</a>
+      <a routerLink="/shop/electronics" (click)="closeMobile()">ELECTRONICS</a>
+      @for (category of catalog.allCategories(); track category.id) {
+        <a [routerLink]="['/shop', category.slug]" (click)="closeMobile()">{{ category.name | uppercase }}</a>
+      }
+      <a routerLink="/contact" (click)="closeMobile()">CONTACT</a>
+      <a routerLink="/account" (click)="closeMobile()">ACCOUNT</a>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <!-- Emporium top utility + primary header -->
+      <mat-toolbar color="primary" class="top-toolbar">
+        <div class="wrap toolbar-row top-row">
+          <span class="hotline"><mat-icon>call</mat-icon> Hotline: {{ brand.phone }}</span>
+          <span class="welcome">{{ brand.tagline }}</span>
+          <div class="top-links">
+            <button mat-button type="button" [matMenuTriggerFor]="currencyMenu">USD <mat-icon>arrow_drop_down</mat-icon></button>
+            <mat-menu #currencyMenu="matMenu">
+              <button mat-menu-item type="button">USD</button>
+              <button mat-menu-item type="button">INR</button>
+            </mat-menu>
+            <button mat-button type="button" [matMenuTriggerFor]="langMenu">ENGLISH <mat-icon>arrow_drop_down</mat-icon></button>
+            <mat-menu #langMenu="matMenu">
+              <button mat-menu-item type="button">ENGLISH</button>
+            </mat-menu>
+            <a mat-button routerLink="/wishlist">COMPARE (0)</a>
+            <a mat-button routerLink="/wishlist">WISHLIST ({{ wishlist.count() }})</a>
+            <a mat-button routerLink="/account"><mat-icon>person</mat-icon> ACCOUNT <mat-icon>arrow_drop_down</mat-icon></a>
+          </div>
+        </div>
+
+        <div class="wrap toolbar-row main-row">
+          <button class="menu-btn" mat-icon-button type="button" (click)="mobileOpen.set(true)">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <a routerLink="/" class="logo">{{ brand.name.toUpperCase() }}</a>
+
+          <form class="search-bar" (ngSubmit)="submitSearch()">
+            <mat-select [(ngModel)]="searchCategory" name="category" class="cat-select">
+              <mat-option value="all">All Categories</mat-option>
+              @for (category of catalog.allCategories(); track category.id) {
+                <mat-option [value]="category.slug">{{ category.name }}</mat-option>
+              }
+            </mat-select>
+            <input
+              name="q"
+              [(ngModel)]="searchQuery"
+              placeholder="Type to search..."
+              aria-label="Search products"
+            />
+            <button mat-icon-button type="submit" aria-label="Search"><mat-icon>search</mat-icon></button>
+          </form>
+
+          <a mat-button routerLink="/cart" class="cart-btn">
+            <mat-icon aria-hidden="false" [matBadge]="cart.count() || null" matBadgeColor="warn" matBadgeSize="small">shopping_cart</mat-icon>
+            Shopping Cart
+            <mat-icon>arrow_drop_down</mat-icon>
+          </a>
+        </div>
+      </mat-toolbar>
+
+      <!-- Emporium white top navbar -->
+      <mat-toolbar class="top-navbar mat-elevation-z2">
+        <div class="wrap nav-row">
+          <a routerLink="/home" routerLinkActive="active">HOME</a>
+          <a routerLink="/shop">FASHION</a>
+          <a routerLink="/shop">JEWELLERY</a>
+          <a routerLink="/shop/electronics" routerLinkActive="active">ELECTRONICS</a>
+          <a routerLink="/shop">SPORTS</a>
+          <a routerLink="/shop" [matMenuTriggerFor]="pagesMenu">PAGES <mat-icon>arrow_drop_down</mat-icon></a>
+          <mat-menu #pagesMenu="matMenu">
+            <a mat-menu-item routerLink="/cart">Cart</a>
+            <a mat-menu-item routerLink="/wishlist">Wishlist</a>
+            <a mat-menu-item routerLink="/account">Account</a>
+          </mat-menu>
+          <a routerLink="/contact" routerLinkActive="active">CONTACT</a>
+        </div>
+      </mat-toolbar>
+
+      <main class="theme-container main">
+        <router-outlet />
+      </main>
+
+      <footer class="site-footer">
+        <div class="newsletter">
+          <div class="wrap newsletter-row">
+            <div>
+              <h3>Subscribe our Newsletter</h3>
+              <p>Stay up to date with our latest news and products</p>
+            </div>
+            <form class="newsletter-form" (submit)="$event.preventDefault()">
+              <input type="email" placeholder="Enter your email" />
+              <button mat-flat-button color="primary" type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="wrap footer-grid">
+          <div>
+            <h4>USEFUL LINKS</h4>
+            <a routerLink="/account">My Account</a>
+            <a routerLink="/contact">Contact</a>
+            <a routerLink="/wishlist">Compare</a>
+            <a routerLink="/wishlist">Wishlist</a>
+            <a routerLink="/cart">Checkout</a>
+          </div>
+          <div>
+            <h4>CONTACT INFORMATION</h4>
+            <p><mat-icon>location_on</mat-icon> {{ brand.address }}</p>
+            <p><mat-icon>call</mat-icon> {{ brand.phone }}</p>
+            <p><mat-icon>mail_outline</mat-icon> {{ brand.email }}</p>
+            <p><mat-icon>schedule</mat-icon> {{ brand.hours }}</p>
+          </div>
+          <div>
+            <h4>{{ brand.name.toUpperCase() }}</h4>
+            <p>Material Design storefront inspired by Emporium electronics catalogue.</p>
+          </div>
+        </div>
+        <div class="wrap copyright">Copyright © {{ brand.name }}</div>
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

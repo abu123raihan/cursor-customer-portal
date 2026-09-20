@@ -1,0 +1,53 @@
+<mat-card class="product-item text-center">
+  @if (discountPercent(); as off) {
+    <mat-chip-set class="discount-chip">
+      <mat-chip highlighted color="warn">{{ off }}% OFF</mat-chip>
+    </mat-chip-set>
+  }
+
+  <a class="image-link" [routerLink]="['/product', product.slug]">
+    <img [src]="product.image" [alt]="product.name" loading="lazy" />
+  </a>
+
+  <h4 class="category text-muted">{{ categoryName() }}</h4>
+  <a class="title text-truncate" [routerLink]="['/product', product.slug]">{{ product.name }}</a>
+
+  <div class="prices">
+    <div class="price-col">
+      <p class="old-price text-muted">
+        @if (product.compareAtPrice) {
+          {{ product.compareAtPrice | currency: product.currency : "symbol" : "1.2-2" }}
+        }
+      </p>
+      <p class="new-price">{{ product.price | currency: product.currency : "symbol" : "1.2-2" }}</p>
+    </div>
+    <div class="rating-col">
+      <div class="ratings">
+        @for (icon of stars(); track $index) {
+          <mat-icon class="mat-icon-xs">{{ icon }}</mat-icon>
+        }
+      </div>
+      <p class="ratings-count text-muted">{{ product.reviewCount }} ratings</p>
+    </div>
+  </div>
+
+  <div class="icons">
+    <button
+      mat-icon-button
+      type="button"
+      [matTooltip]="wished() ? 'Remove from wishlist' : 'Add to wishlist'"
+      (click)="toggleWish($event)"
+    >
+      <mat-icon>{{ wished() ? "favorite" : "favorite_border" }}</mat-icon>
+    </button>
+    <button mat-icon-button type="button" matTooltip="Add to cart" (click)="addToCart($event)">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <a mat-icon-button [routerLink]="['/product', product.slug]" matTooltip="Compare">
+      <mat-icon>compare</mat-icon>
+    </a>
+    <a mat-icon-button [routerLink]="['/product', product.slug]" matTooltip="Quick view">
+      <mat-icon>remove_red_eye</mat-icon>
+    </a>
+  </div>
+</mat-card>
