@@ -1,5 +1,5 @@
 .wrap {
-  width: min(1200px, calc(100% - 2rem));
+  width: var(--portal-wrap);
   margin-inline: auto;
 }
 
@@ -13,14 +13,15 @@
   letter-spacing: 0.12em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #e65100;
+  color: var(--portal-primary);
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Rajdhani", sans-serif;
-  color: #0d47a1;
+  font-family: var(--portal-font);
+  color: var(--portal-ink);
+  font-weight: 500;
 }
 
 h1 {
@@ -44,14 +45,14 @@ h1 {
 .info article {
   display: flex;
   gap: 0.75rem;
-  background: #fff;
-  border: 1px solid #e3eaf1;
-  border-radius: 4px;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
   padding: 1rem;
+  box-shadow: var(--portal-shadow);
 }
 
 .info mat-icon {
-  color: #1565c0;
+  color: var(--portal-primary);
 }
 
 .info h3 {
@@ -61,17 +62,17 @@ h1 {
 
 .info p {
   margin: 0;
-  color: #546e7a;
+  color: var(--portal-muted);
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #e3eaf1;
-  border-radius: 4px;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  box-shadow: var(--portal-shadow);
 }
 
 @media (max-width: 800px) {

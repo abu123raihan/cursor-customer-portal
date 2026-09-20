@@ -19,9 +19,9 @@
         <h1>{{ product.name }}</h1>
         <p class="rating"><mat-icon>star</mat-icon> {{ product.rating }} ({{ product.reviewCount }} reviews)</p>
         <p class="price">
-          <strong>{{ product.price | currency: product.currency : "symbol" : "1.0-0" }}</strong>
+          <strong>{{ product.price | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</strong>
           @if (product.compareAtPrice) {
-            <s>{{ product.compareAtPrice | currency: product.currency : "symbol" : "1.0-0" }}</s>
+            <s>{{ product.compareAtPrice | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</s>
           }
           <span>/ {{ product.unit }}</span>
         </p>

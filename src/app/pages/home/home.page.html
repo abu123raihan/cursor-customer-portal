@@ -1,5 +1,5 @@
 <section class="hero" aria-label="Featured promotions">
-  @for (slide of slides; track slide.title; let i = $index) {
+  @for (slide of slides(); track slide.title; let i = $index) {
     <article class="slide" [class.active]="slideIndex() === i" [style.background-image]="'url(' + slide.image + ')'">
       <div class="overlay">
         <div class="wrap copy">
@@ -16,7 +16,7 @@
       <mat-icon>chevron_left</mat-icon>
     </button>
     <div class="dots">
-      @for (slide of slides; track slide.title; let i = $index) {
+      @for (slide of slides(); track slide.title; let i = $index) {
         <button type="button" [class.active]="slideIndex() === i" [attr.aria-label]="'Go to slide ' + (i + 1)" (click)="go(i)"></button>
       }
     </div>
@@ -95,14 +95,14 @@
 
 <section class="promo wrap">
   <div class="promo-copy">
-    <p class="eyebrow">Contractor pack</p>
-    <h2>Wire coils + MCBs ready for site kits</h2>
-    <p>Build a cart as a guest. Sign in only when you need checkout and invoice download.</p>
-    <a mat-flat-button color="accent" routerLink="/shop/wires-cables">Browse wires & cables</a>
+    <p class="eyebrow">From ERP inventory</p>
+    <h2>Live catalog for {{ catalog.name() }}</h2>
+    <p>Categories and products load from cursor-node-api. Guest cart stays on this device.</p>
+    <a mat-flat-button color="accent" routerLink="/shop">Browse all products</a>
   </div>
   <img
-    src="https://images.unsplash.com/photo-1473341304170-971dccb5ce1e?auto=format&fit=crop&w=1000&q=80"
-    alt="Electrical cables on site"
+    [src]="catalog.allCategories()[0]?.image || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1000&q=80'"
+    [alt]="catalog.name()"
     loading="lazy"
   />
 </section>

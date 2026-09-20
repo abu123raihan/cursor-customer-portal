@@ -1,0 +1,102 @@
+// Base reset & shared utilities for cursor-customer-portal
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  background: var(--portal-surface);
+  font-family: var(--portal-font);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--portal-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--portal-primary-dark);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--portal-font);
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.text-muted {
+  color: var(--portal-muted) !important;
+}
+
+.primary-color {
+  color: var(--portal-primary);
+}
+
+.portal-wrap {
+  width: var(--portal-wrap);
+  margin-inline: auto;
+}
+
+.portal-card {
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
+  box-shadow: var(--portal-shadow);
+}
+
+.portal-page {
+  padding: 1.25rem 0 2.5rem;
+}
+
+.portal-eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--portal-primary);
+}
+
+.portal-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: var(--portal-card);
+  border: 1px solid var(--portal-border);
+  border-radius: var(--portal-radius-lg);
+  color: var(--portal-muted);
+}
+
+.app.portal,
+.app.green {
+  min-height: 100vh;
+  background: var(--portal-surface);
+}
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: var(--portal-primary-deep);
+  --mdc-snackbar-supporting-text-color: #fff;
+}

@@ -1,0 +1,16 @@
+// Angular Material theme for cursor-customer-portal (project-owned wrapper).
+@use "@angular/material" as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$green-palette,
+        tertiary: mat.$red-palette
+      ),
+      typography: Roboto,
+      density: -1
+    )
+  );
+}

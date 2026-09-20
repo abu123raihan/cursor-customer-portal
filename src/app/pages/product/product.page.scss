@@ -1,5 +1,5 @@
 .wrap {
-  width: min(1200px, calc(100% - 2rem));
+  width: var(--portal-wrap);
   margin-inline: auto;
 }
 
@@ -12,27 +12,31 @@
   flex-wrap: wrap;
   gap: 0.4rem;
   margin-bottom: 1.25rem;
-  color: #78909c;
+  color: var(--portal-muted);
   font-size: 0.9rem;
 }
 
 .crumbs a {
-  color: #1565c0;
+  color: var(--portal-primary);
   text-decoration: none;
+}
+
+.crumbs a:hover {
+  text-decoration: underline;
 }
 
 .detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  background: #fff;
-  border: 1px solid #e3eaf1;
-  border-radius: 4px;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
   overflow: hidden;
+  box-shadow: var(--portal-shadow);
 }
 
 .media {
-  background: #eef2f6;
+  background: var(--portal-surface);
   min-height: 22rem;
 }
 
@@ -51,13 +55,14 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
-  color: #78909c;
+  color: var(--portal-muted);
 }
 
 h1,
 h2 {
-  font-family: "Rajdhani", sans-serif;
-  color: #0d47a1;
+  font-family: var(--portal-font);
+  color: var(--portal-ink);
+  font-weight: 500;
 }
 
 h1 {
@@ -70,11 +75,11 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  color: #546e7a;
+  color: var(--portal-ink-secondary);
 }
 
 .rating mat-icon {
-  color: #f9a825;
+  color: var(--portal-star);
   font-size: 1.1rem;
   width: 1.1rem;
   height: 1.1rem;
@@ -89,24 +94,25 @@ h1 {
 
 .price strong {
   font-size: 1.8rem;
-  font-family: "Rajdhani", sans-serif;
-  color: #0d47a1;
+  font-family: var(--portal-font);
+  color: var(--portal-accent);
+  font-weight: 500;
 }
 
 .price s,
 .price span {
-  color: #90a4ae;
+  color: var(--portal-faint);
 }
 
 .desc {
-  color: #455a64;
+  color: var(--portal-ink-secondary);
   line-height: 1.55;
 }
 
 ul {
   margin: 0 0 1.25rem;
   padding-left: 1.1rem;
-  color: #455a64;
+  color: var(--portal-ink-secondary);
 }
 
 .buy {
@@ -130,12 +136,12 @@ ul {
 
 .stock {
   margin-top: 1rem;
-  color: #2e7d32;
+  color: var(--portal-primary-dark);
   font-weight: 600;
 }
 
 .stock.out {
-  color: #c62828;
+  color: var(--portal-accent);
 }
 
 .related {
@@ -144,6 +150,7 @@ ul {
 
 .related h2 {
   margin: 0 0 1rem;
+  color: var(--portal-primary);
 }
 
 .product-grid {

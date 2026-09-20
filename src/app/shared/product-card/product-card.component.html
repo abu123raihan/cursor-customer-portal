@@ -1,8 +1,6 @@
 <mat-card class="product-item text-center">
   @if (discountPercent(); as off) {
-    <mat-chip-set class="discount-chip">
-      <mat-chip highlighted color="warn">{{ off }}% OFF</mat-chip>
-    </mat-chip-set>
+    <span class="sale-badge">{{ off }}% OFF</span>
   }
 
   <a class="image-link" [routerLink]="['/product', product.slug]">
@@ -16,10 +14,10 @@
     <div class="price-col">
       <p class="old-price text-muted">
         @if (product.compareAtPrice) {
-          {{ product.compareAtPrice | currency: product.currency : "symbol" : "1.2-2" }}
+          {{ product.compareAtPrice | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}
         }
       </p>
-      <p class="new-price">{{ product.price | currency: product.currency : "symbol" : "1.2-2" }}</p>
+      <p class="new-price">{{ product.price | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</p>
     </div>
     <div class="rating-col">
       <div class="ratings">

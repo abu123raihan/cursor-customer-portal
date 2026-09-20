@@ -14,6 +14,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from "@angular/rou
 import { CartService } from "../cart/cart.service";
 import { STORE_BRAND } from "../catalog/catalog.data";
 import { CatalogService } from "../catalog/catalog.service";
+import { AuthStore } from "../auth/auth.store";
 import { WishlistService } from "../wishlist/wishlist.service";
 
 @Component({
@@ -43,6 +44,7 @@ export class StoreShellComponent {
   readonly cart = inject(CartService);
   readonly wishlist = inject(WishlistService);
   readonly catalog = inject(CatalogService);
+  readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
 
   readonly mobileOpen = signal(false);
