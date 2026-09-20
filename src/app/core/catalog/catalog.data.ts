@@ -5,6 +5,7 @@ export const STORE_CURRENCY = "INR" as const;
 
 export const STORE_BRAND = {
   name: "AK Electricals",
+  legalName: "AK Complete Solution",
   tagline: "Welcome to our market!",
   phone: "(+91) 8876900903",
   email: "akelectricalsbprd@gmail.com",

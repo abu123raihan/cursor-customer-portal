@@ -153,6 +153,129 @@ ul {
   color: var(--portal-primary);
 }
 
+.reviews {
+  margin-top: 2rem;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
+  box-shadow: var(--portal-shadow);
+  padding: 1.5rem;
+}
+
+.reviews-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-bottom: 1.25rem;
+}
+
+.reviews-head h2 {
+  margin: 0;
+  color: var(--portal-primary);
+}
+
+.reviews-head p {
+  margin: 0;
+  color: var(--portal-muted);
+  font-size: 0.9rem;
+}
+
+.review-form,
+.review-signin {
+  border: 1px solid var(--portal-border);
+  border-radius: var(--portal-radius-lg);
+  padding: 1rem 1.1rem 1.15rem;
+  margin-bottom: 1.25rem;
+}
+
+.review-form h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.review-form .hint,
+.review-signin p {
+  margin: 0 0 0.75rem;
+  color: var(--portal-muted);
+  font-size: 0.88rem;
+}
+
+.star-picker {
+  display: flex;
+  gap: 0.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.star-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: var(--portal-faint);
+}
+
+.star-btn.active,
+.star-btn:hover {
+  color: var(--portal-star);
+}
+
+.star-btn mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.review-form .full {
+  width: 100%;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.review-item {
+  border-top: 1px solid var(--portal-border);
+  padding-top: 0.85rem;
+}
+
+.review-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.review-meta span {
+  color: var(--portal-faint);
+}
+
+.review-stars {
+  display: flex;
+  margin: 0.25rem 0 0.35rem;
+}
+
+.review-stars mat-icon {
+  color: var(--portal-star);
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.review-item p {
+  margin: 0;
+  color: var(--portal-ink-secondary);
+  line-height: 1.45;
+}
+
+.empty-reviews {
+  margin: 0;
+  color: var(--portal-muted);
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

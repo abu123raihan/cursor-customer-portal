@@ -1,19 +1,37 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
-import { ApiEnvelope, CustomerSession, ForgotPasswordResult, HealthStatus, PublicStore, ResetPasswordResult } from "./api.models";
+import {
+  ApiEnvelope,
+  CustomerSession,
+  ForgotPasswordResult,
+  HealthStatus,
+  ProductReview,
+  ProductReviewList,
+  PublicStore,
+  ResetPasswordResult
+} from "./api.models";
+import { AuthStore } from "../auth/auth.store";
 
 @Injectable({ providedIn: "root" })
 export class ApiService {
   private readonly http = inject(HttpClient);
+  private readonly auth = inject(AuthStore);
   private readonly baseUrl = environment.apiBaseUrl.replace(/\/$/, "");
 
   /** Dev default matches demo-grocery via API host fallback / X-Store-Host. */
   private readonly storeHost = environment.storeHost ?? "demo";
 
-  private storeHeaders(): { "X-Store-Host": string } {
-    return { "X-Store-Host": this.storeHost };
+  private storeHeaders(withAuth = false): HttpHeaders {
+    let headers = new HttpHeaders({ "X-Store-Host": this.storeHost });
+    if (withAuth) {
+      const token = this.auth.accessToken();
+      if (token) {
+        headers = headers.set("Authorization", `Bearer ${token}`);
+      }
+    }
+    return headers;
   }
 
   getHealth(): Observable<ApiEnvelope<HealthStatus>> {
@@ -51,6 +69,25 @@ export class ApiService {
     return this.http.post<ApiEnvelope<ResetPasswordResult>>(
       `${this.baseUrl}/api/v1/public/auth/reset-password`,
       { token, password }
+    );
+  }
+
+  getProductReviews(productId: string): Observable<ApiEnvelope<ProductReviewList>> {
+    return this.http.get<ApiEnvelope<ProductReviewList>>(
+      `${this.baseUrl}/api/v1/public/products/${encodeURIComponent(productId)}/reviews`,
+      { headers: this.storeHeaders() }
+    );
+  }
+
+  postProductReview(
+    productId: string,
+    rating: number,
+    body: string
+  ): Observable<ApiEnvelope<ProductReview>> {
+    return this.http.post<ApiEnvelope<ProductReview>>(
+      `${this.baseUrl}/api/v1/public/products/${encodeURIComponent(productId)}/reviews`,
+      { rating, body },
+      { headers: this.storeHeaders(true) }
     );
   }
 }

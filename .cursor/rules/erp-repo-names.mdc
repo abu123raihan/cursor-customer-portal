@@ -1,13 +1,15 @@
 ---
-description: Permanent ERP repository names and roles
+description: Permanent AK Fusion repository names and roles
 alwaysApply: true
 ---
 
-# ERP repo names
+# AK Fusion — repo names
+
+Product: **AK Fusion**.
 
 Three independent repositories:
 
-- **cursor-node-api** — the API. Only this talks to the database (MySQL). All business logic and DB access live here. ERP-API is cursor-node-api; it owns the database.
+- **cursor-node-api** — the API. Only this talks to the database (MySQL). All business logic and DB access live here. It owns the database.
 - **cursor-admin-ui** — the admin portal.
 - **cursor-customer-portal** — the customer website / storefront.
 

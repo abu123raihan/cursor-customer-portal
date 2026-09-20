@@ -3,6 +3,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
 import { CatalogService } from "../../core/catalog/catalog.service";
+import { STORE_BRAND } from "../../core/catalog/catalog.data";
 import { ProductCardComponent } from "../../shared/product-card/product-card.component";
 
 @Component({
@@ -14,10 +15,11 @@ import { ProductCardComponent } from "../../shared/product-card/product-card.com
 })
 export class HomePage implements OnInit, OnDestroy {
   readonly catalog = inject(CatalogService);
+  readonly brand = STORE_BRAND;
   readonly slideIndex = signal(0);
 
   readonly slides = computed(() => {
-    const name = this.catalog.name();
+    const name = this.brand.legalName;
     const cats = this.catalog.allCategories();
     const first = cats[0];
     const second = cats[1];
@@ -25,7 +27,7 @@ export class HomePage implements OnInit, OnDestroy {
       {
         eyebrow: name,
         title: `Shop ${name} online`,
-        text: "Guest catalog synced from ERP inventory. Add to cart without signing in.",
+        text: "Guest catalog synced from AK Fusion inventory. Add to cart without signing in.",
         cta: "Shop bestsellers",
         link: "/shop",
         image:

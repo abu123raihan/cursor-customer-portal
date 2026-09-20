@@ -58,7 +58,7 @@ export interface SessionUser {
   id: string;
   email: string;
   displayName: string;
-  principalType: "platform_admin" | "staff" | "customer";
+  principalType: "super_admin" | "admin" | "admin_staff" | "employee" | "customer" | "agent";
   companyId: string | null;
   permissions: string[];
   mfaEnabled: boolean;
@@ -86,4 +86,22 @@ export interface ForgotPasswordResult {
 
 export interface ResetPasswordResult {
   message: string;
+}
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  rating: number;
+  body: string;
+  displayName: string;
+  createdAt: string;
+  updatedAt: string;
+  updated?: boolean;
+}
+
+export interface ProductReviewList {
+  productId: string;
+  rating: number;
+  reviewCount: number;
+  reviews: ProductReview[];
 }

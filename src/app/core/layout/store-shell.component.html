@@ -124,11 +124,11 @@
             <p><mat-icon>schedule</mat-icon> {{ brand.hours }}</p>
           </div>
           <div>
-            <h4>{{ catalog.name().toUpperCase() }}</h4>
+            <h4>{{ brand.legalName.toUpperCase() }}</h4>
             <p>Catalog synced from cursor-node-api inventory for guest browse.</p>
           </div>
         </div>
-        <div class="wrap copyright">Copyright © {{ catalog.name() }}</div>
+        <div class="wrap copyright">Copyright © {{ brand.legalName }}</div>
       </footer>
     </mat-sidenav-content>
   </mat-sidenav-container>

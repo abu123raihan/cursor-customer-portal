@@ -1,6 +1,6 @@
 # cursor-customer-portal
 
-Angular 22 storefront and public site. Consumes **cursor-node-api** only. Never connect this app to MySQL.
+Angular 22 storefront for **AK Fusion**. Consumes **cursor-node-api** only. Never connect this app to MySQL.
 
 ## Setup
 

@@ -1,5 +1,5 @@
 ---
-description: Angular ERP admin and website standards
+description: Angular AK Fusion admin and website standards
 globs:
   - "src/**/*.ts"
   - "src/**/*.html"
@@ -13,7 +13,7 @@ Use Angular 22 (zoneless, no `zone.js`) for cursor-admin-ui and cursor-customer-
 
 Requires Node.js `^22.22.3 || ^24.15.0 || >=26.0.0` and TypeScript 6.0.x.
 
-Angular applications consume ERP-API.
+Angular applications consume cursor-node-api (AK Fusion API).
 
 Never connect Angular directly to MySQL.
 

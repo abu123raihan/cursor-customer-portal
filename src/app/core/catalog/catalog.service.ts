@@ -138,7 +138,7 @@ export class CatalogService {
       compareAtPrice: p.compareAtPrice != null ? Number(p.compareAtPrice) : undefined,
       currency: "INR",
       unit: p.unit || "pcs",
-      rating: p.rating ?? 4.5,
+      rating: p.rating ?? 0,
       reviewCount: p.reviewCount ?? 0,
       inStock: p.inStock !== false,
       badge: p.badge,

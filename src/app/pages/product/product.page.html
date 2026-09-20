@@ -17,7 +17,15 @@
       <div class="info">
         <p class="brand">{{ product.brand }} · {{ product.sku }}</p>
         <h1>{{ product.name }}</h1>
-        <p class="rating"><mat-icon>star</mat-icon> {{ product.rating }} ({{ product.reviewCount }} reviews)</p>
+        <p class="rating">
+          @for (icon of starIcons(reviewStats().rating || product.rating); track $index) {
+            <mat-icon>{{ icon }}</mat-icon>
+          }
+          <span>
+            {{ reviewStats().rating || product.rating || "—" }}
+            ({{ reviewStats().reviewCount || product.reviewCount }} reviews)
+          </span>
+        </p>
         <p class="price">
           <strong>{{ product.price | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</strong>
           @if (product.compareAtPrice) {
@@ -51,6 +59,66 @@
         </p>
       </div>
     </div>
+
+    <section class="reviews">
+      <div class="reviews-head">
+        <h2>Customer reviews</h2>
+        <p>
+          {{ reviewStats().reviewCount || 0 }} review{{ reviewStats().reviewCount === 1 ? "" : "s" }}
+          @if (reviewStats().reviewCount) {
+            · average {{ reviewStats().rating }}/5
+          }
+        </p>
+      </div>
+
+      @if (user(); as sessionUser) {
+        <form class="review-form" [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+          <h3>Rate this product</h3>
+          <p class="hint">Signed in as {{ sessionUser.displayName }}. You can update your rating later.</p>
+          <div class="star-picker" role="group" aria-label="Rating out of 5">
+            @for (n of [1, 2, 3, 4, 5]; track n) {
+              <button type="button" class="star-btn" [class.active]="selectedRating() >= n" (click)="setRating(n)" [attr.aria-label]="n + ' stars'">
+                <mat-icon>{{ selectedRating() >= n ? "star" : "star_border" }}</mat-icon>
+              </button>
+            }
+          </div>
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Your review</mat-label>
+            <textarea matInput rows="3" formControlName="body" placeholder="Share what you liked or what could be better"></textarea>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="submit" [disabled]="submittingReview()">
+            {{ submittingReview() ? "Saving…" : "Post rating & review" }}
+          </button>
+        </form>
+      } @else {
+        <div class="review-signin">
+          <p>Sign in to post a rating (1–5) and review.</p>
+          <a mat-stroked-button color="primary" routerLink="/account">Sign in</a>
+        </div>
+      }
+
+      <div class="review-list">
+        @if (!reviews().length) {
+          <p class="empty-reviews">No reviews yet. Be the first to rate this item.</p>
+        }
+        @for (review of reviews(); track review.id) {
+          <article class="review-item">
+            <div class="review-meta">
+              <strong>{{ review.displayName }}</strong>
+              <span>{{ review.createdAt | date: "mediumDate" }}</span>
+            </div>
+            <div class="review-stars">
+              @for (icon of starIcons(review.rating); track $index) {
+                <mat-icon>{{ icon }}</mat-icon>
+              }
+            </div>
+            @if (review.body) {
+              <p>{{ review.body }}</p>
+            }
+          </article>
+        }
+      </div>
+    </section>
 
     @if (related().length) {
       <div class="related">

@@ -95,14 +95,14 @@
 
 <section class="promo wrap">
   <div class="promo-copy">
-    <p class="eyebrow">From ERP inventory</p>
-    <h2>Live catalog for {{ catalog.name() }}</h2>
+    <p class="eyebrow">From AK Fusion inventory</p>
+    <h2>Live catalog for {{ brand.legalName }}</h2>
     <p>Categories and products load from cursor-node-api. Guest cart stays on this device.</p>
     <a mat-flat-button color="accent" routerLink="/shop">Browse all products</a>
   </div>
   <img
     [src]="catalog.allCategories()[0]?.image || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1000&q=80'"
-    [alt]="catalog.name()"
+    [alt]="brand.legalName"
     loading="lazy"
   />
 </section>

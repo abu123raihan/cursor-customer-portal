@@ -1,18 +1,20 @@
 ---
-description: Complete ERP architecture rules
+description: Complete AK Fusion architecture rules
 alwaysApply: true
 ---
 
-# ERP CORE RULES
+# AK BUSINESS SUITE — CORE RULES
+
+Product name: **AK Fusion**.
 
 Three independent repositories:
-1. cursor-node-api — the API. Only this talks to MySQL. All business logic and DB access live here. ERP-API is cursor-node-api; it owns the database.
+1. cursor-node-api — the API. Only this talks to MySQL. All business logic and DB access live here. It owns the database.
 2. cursor-admin-ui — the admin portal.
 3. cursor-customer-portal — the customer website / storefront.
 
 One central MySQL database.
 
-ERP-API (cursor-node-api) is the single source of business logic and database access.
+cursor-node-api is the single source of business logic and database access.
 
 Frontend applications must never access MySQL directly. They call cursor-node-api only.
 
