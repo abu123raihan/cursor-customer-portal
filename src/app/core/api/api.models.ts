@@ -14,3 +14,12 @@ export interface HealthStatus {
   status: "ok";
   service: string;
 }
+
+export interface WebsiteNavMenu {
+  id: string;
+  menuId: string;
+  parentId: string | null;
+  label: string;
+  route: string;
+  sortOrder: number;
+}

@@ -15,6 +15,7 @@ export const routes: Routes = [
     children: [
       { path: "", pathMatch: "full", redirectTo: "shop/electronics" },
       { path: "home", component: HomePage },
+      { path: "products", redirectTo: "shop" },
       { path: "shop", component: ShopPage },
       { path: "shop/:categorySlug", component: ShopPage },
       { path: "product/:slug", component: ProductPage },

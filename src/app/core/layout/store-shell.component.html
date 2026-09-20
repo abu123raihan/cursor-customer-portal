@@ -5,13 +5,12 @@
         <strong>{{ brand.name }}</strong>
         <button mat-icon-button type="button" (click)="closeMobile()"><mat-icon>close</mat-icon></button>
       </div>
-          <a routerLink="/home" (click)="closeMobile()">HOME</a>
-      <a routerLink="/shop/electronics" (click)="closeMobile()">ELECTRONICS</a>
+      @for (item of menus(); track item.id) {
+        <a [routerLink]="item.route" (click)="closeMobile()">{{ item.label | uppercase }}</a>
+      }
       @for (category of catalog.allCategories(); track category.id) {
         <a [routerLink]="['/shop', category.slug]" (click)="closeMobile()">{{ category.name | uppercase }}</a>
       }
-      <a routerLink="/contact" (click)="closeMobile()">CONTACT</a>
-      <a routerLink="/account" (click)="closeMobile()">ACCOUNT</a>
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -69,18 +68,11 @@
       <!-- Emporium white top navbar -->
       <mat-toolbar class="top-navbar mat-elevation-z2">
         <div class="wrap nav-row">
-          <a routerLink="/home" routerLinkActive="active">HOME</a>
-          <a routerLink="/shop">FASHION</a>
-          <a routerLink="/shop">JEWELLERY</a>
-          <a routerLink="/shop/electronics" routerLinkActive="active">ELECTRONICS</a>
-          <a routerLink="/shop">SPORTS</a>
-          <a routerLink="/shop" [matMenuTriggerFor]="pagesMenu">PAGES <mat-icon>arrow_drop_down</mat-icon></a>
-          <mat-menu #pagesMenu="matMenu">
-            <a mat-menu-item routerLink="/cart">Cart</a>
-            <a mat-menu-item routerLink="/wishlist">Wishlist</a>
-            <a mat-menu-item routerLink="/account">Account</a>
-          </mat-menu>
-          <a routerLink="/contact" routerLinkActive="active">CONTACT</a>
+          @for (item of menus(); track item.id) {
+            <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.route === '/' || item.route === '/home' }">{{
+              item.label | uppercase
+            }}</a>
+          }
         </div>
       </mat-toolbar>
 

@@ -11,10 +11,20 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import { WebsiteNavMenu } from "../api/api.models";
+import { ApiService } from "../api/api.service";
 import { CartService } from "../cart/cart.service";
 import { STORE_BRAND } from "../catalog/catalog.data";
 import { CatalogService } from "../catalog/catalog.service";
 import { WishlistService } from "../wishlist/wishlist.service";
+
+const FALLBACK_MENUS: WebsiteNavMenu[] = [
+  { id: "home", menuId: "home", parentId: null, label: "Home", route: "/home", sortOrder: 10 },
+  { id: "shop", menuId: "shop", parentId: null, label: "Shop", route: "/shop", sortOrder: 20 },
+  { id: "cart", menuId: "cart", parentId: null, label: "Cart", route: "/cart", sortOrder: 30 },
+  { id: "wishlist", menuId: "wishlist", parentId: null, label: "Wishlist", route: "/wishlist", sortOrder: 40 },
+  { id: "account", menuId: "account", parentId: null, label: "Account", route: "/account", sortOrder: 50 }
+];
 
 @Component({
   selector: "app-store-shell",
@@ -43,11 +53,22 @@ export class StoreShellComponent {
   readonly cart = inject(CartService);
   readonly wishlist = inject(WishlistService);
   readonly catalog = inject(CatalogService);
+  private readonly api = inject(ApiService);
   private readonly router = inject(Router);
 
   readonly mobileOpen = signal(false);
+  readonly menus = signal<WebsiteNavMenu[]>(FALLBACK_MENUS);
   searchQuery = "";
   searchCategory = "all";
+
+  constructor() {
+    this.api.getMenus().subscribe({
+      next: (envelope) => {
+        const top = envelope.data.filter((item) => !item.parentId).sort((a, b) => a.sortOrder - b.sortOrder);
+        if (top.length) this.menus.set(top);
+      }
+    });
+  }
 
   submitSearch(): void {
     const q = this.searchQuery.trim();
