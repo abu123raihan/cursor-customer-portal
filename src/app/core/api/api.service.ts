@@ -44,7 +44,7 @@ export class ApiService {
     });
   }
 
-  /** Login; creates a customer account in the DB when the email is new. */
+  /** Login; Agent API creates a customer account when the email is new. */
   loginOrRegister(
     email: string,
     password: string,

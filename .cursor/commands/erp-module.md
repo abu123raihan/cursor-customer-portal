@@ -1,36 +1,27 @@
 ---
 name: erp-module
-description: Implement one approved ERP domain module after planning
+description: Implement one approved Website portal UI module
 ---
 Task: $ARGUMENTS
 
-Implement only the approved domain module.
+Implement only the approved website UI module in this repo.
 
-Inspect existing patterns, documentation, and API contracts first.
+Inspect existing pages, `ApiService`, and Agent API contracts first.
 
 Required when applicable:
-- database/migration
-- model
-- validation
-- repository
-- service
-- controller
-- route/API contract
-- permissions
-- tenant isolation from authenticated context
-- audit logging for financial operations
-- inventory ledger movement for stock-changing operations
-- tests
-- documentation
 
-Controllers stay thin. Business logic stays in services. Database access stays in repositories/models inside cursor-node-api.
+- Angular page/component
+- typed `ApiService` usage
+- loading, empty, error, and validation states
+- responsive / mobile-friendly layout
 
 Do not:
-- modify unrelated modules
+
+- connect to the database or store database information
+- add migrations, models, controllers, or routes
 - invent frontend endpoints
-- connect Angular to MySQL
-- change posted accounting or inventory history silently
 - trust client-supplied company_id
 
-Run available typecheck/lint/tests.
-Report files changed and remaining work.
+If the UI is blocked on API work, request Agent API as **Website portal** and stop.
+
+Run available typecheck. Report files changed and remaining Agent API requests.

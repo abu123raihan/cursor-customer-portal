@@ -1,6 +1,8 @@
 # cursor-customer-portal
 
-Angular 22 storefront for **AK Fusion**. Consumes **cursor-node-api** only. Never connect this app to MySQL.
+Angular 22 storefront for **AK Fusion** (Website portal). Consumes **Agent API** (`cursor-node-api`) only.
+
+Never connect this app to MySQL. Never store database information here. Persistence and contracts belong to Agent API. Identify as **Website portal** when requesting API work.
 
 ## Setup
 
@@ -20,12 +22,12 @@ API base URL: `http://localhost:3000` (`src/environments/environment.development
 src/app/
   core/api/          typed API client
   core/layout/       responsive shell
-  pages/             home, health
+  pages/             home, shop, product, cart, account
 ```
 
-Do not invent endpoints. Catalog, cart, and checkout wait for the Website module after sales and payments exist.
+Do not invent endpoints. After Agent API ships a contract, consume it with typed `ApiService` methods.
 
 ## Documentation
 
-Master docs: `F:\Cursor\Project\docs`  
-Local pointer: [docs/README.md](docs/README.md)
+UI notes: [docs/README.md](docs/README.md)  
+API / database: Agent API repo `cursor-node-api`

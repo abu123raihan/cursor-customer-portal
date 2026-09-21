@@ -1,0 +1,31 @@
+---
+description: Website portal — no database; coordinate with Agent API as Website portal
+alwaysApply: true
+---
+
+# Website Agent — cursor-customer-portal boundary
+
+This folder is the **customer website / storefront**. Identify as **Website portal** (`cursor-customer-portal`) whenever coordinating with Agent API.
+
+## Never do this here
+
+- Do not connect to MySQL or any database.
+- Do not store database information: connection strings, credentials, schema, SQL, migrations, table layouts, or dump files.
+- Do not add Sequelize, ORM models, repositories, Express routes, or server-side business logic.
+- Do not invent or implement API endpoints.
+
+## How to get or store data
+
+- HTTP only, through **Agent API** (`cursor-node-api`) via `ApiService` and `environment.apiBaseUrl`.
+- Guest cart/wishlist may use `localStorage` until Agent API ships persistence. Never persist business records as a local database.
+
+## Coordinate with Agent API
+
+If a screen needs new data, a new endpoint, a contract change, validation, tenant rules, or any persistence:
+
+1. Stop. Do not implement it in this folder.
+2. Ask **Agent API** and open with: **I am from the Website portal** (`cursor-customer-portal` / Website Agent).
+3. Write the request to `D:\Cursor\cursor-node-api\docs\requests\` so Agent API knows the requester.
+4. After Agent API ships the contract, consume it here with typed `ApiService` methods.
+
+Do not trust a client-supplied `company_id` for authorization. Store tenant comes from `X-Store-Host` / customer session on Agent API.
