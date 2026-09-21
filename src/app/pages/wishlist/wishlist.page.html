@@ -19,7 +19,7 @@
           </a>
           <div>
             <a [routerLink]="['/product', product.slug]">{{ product.name }}</a>
-            <p>{{ product.price | currency: product.currency : "symbol" : "1.0-0" }}</p>
+            <p>{{ product.price | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</p>
             <div class="actions">
               <button mat-flat-button color="primary" type="button" (click)="moveToCart(product.id)">
                 Move to cart

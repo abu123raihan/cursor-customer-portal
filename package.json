@@ -2,7 +2,7 @@
   "name": "cursor-customer-portal",
   "version": "0.1.0",
   "private": true,
-  "description": "Angular 22 storefront for the multi-tenant ERP. Consumes cursor-node-api only.",
+  "description": "Angular 22 storefront for AK Fusion. Consumes cursor-node-api only.",
   "engines": {
     "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },

@@ -29,7 +29,7 @@
               <a [routerLink]="['/product', line.product.slug]">{{ line.product.name }}</a>
               <p>{{ line.product.sku }} · {{ line.product.brand }}</p>
               <p class="price">
-                {{ line.product.price | currency: line.product.currency : "symbol" : "1.0-0" }}
+                {{ line.product.price | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}
               </p>
             </div>
             <div class="qty">
@@ -38,7 +38,7 @@
               <button mat-stroked-button type="button" (click)="setQty(line.product.id, line.quantity + 1)">+</button>
             </div>
             <div class="total">
-              <strong>{{ line.lineTotal | currency: line.product.currency : "symbol" : "1.0-0" }}</strong>
+              <strong>{{ line.lineTotal | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</strong>
               <button mat-button type="button" color="warn" (click)="remove(line.product.id)">Remove</button>
             </div>
           </article>
@@ -48,7 +48,7 @@
       <aside class="summary">
         <h2>Order summary</h2>
         <p><span>Items</span><span>{{ count() }}</span></p>
-        <p><span>Subtotal</span><strong>{{ subtotal() | currency: "INR" : "symbol" : "1.0-0" }}</strong></p>
+        <p><span>Subtotal</span><strong>{{ subtotal() | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</strong></p>
         <p class="note">Taxes and shipping are calculated at checkout after you sign in.</p>
         <a mat-flat-button color="accent" routerLink="/account">Sign in to checkout</a>
         <a mat-stroked-button routerLink="/shop">Continue shopping</a>

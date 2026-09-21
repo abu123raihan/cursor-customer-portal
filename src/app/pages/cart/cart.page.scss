@@ -1,5 +1,5 @@
 .wrap {
-  width: min(1200px, calc(100% - 2rem));
+  width: var(--portal-wrap);
   margin-inline: auto;
 }
 
@@ -21,34 +21,35 @@
   letter-spacing: 0.12em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #e65100;
+  color: var(--portal-primary);
 }
 
 h1,
 h2 {
-  font-family: "Rajdhani", sans-serif;
-  color: #0d47a1;
+  font-family: var(--portal-font);
+  color: var(--portal-ink);
   margin: 0.25rem 0;
+  font-weight: 500;
 }
 
 .head p {
   margin: 0;
-  color: #607d8b;
+  color: var(--portal-muted);
 }
 
 .empty {
   text-align: center;
   padding: 3rem 1rem;
-  background: #fff;
-  border: 1px solid #e3eaf1;
-  border-radius: 4px;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
+  box-shadow: var(--portal-shadow);
 }
 
 .empty mat-icon {
   font-size: 3rem;
   width: 3rem;
   height: 3rem;
-  color: #90a4ae;
+  color: var(--portal-faint);
 }
 
 .layout {
@@ -69,36 +70,40 @@ h2 {
   grid-template-columns: 6rem 1fr auto auto;
   gap: 1rem;
   align-items: center;
-  background: #fff;
-  border: 1px solid #e3eaf1;
-  border-radius: 4px;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
   padding: 0.85rem;
+  box-shadow: var(--portal-shadow);
 }
 
 .thumb img {
   width: 6rem;
   height: 6rem;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: var(--portal-radius);
   display: block;
 }
 
 .meta a {
-  color: #0d47a1;
+  color: var(--portal-ink);
   text-decoration: none;
-  font-weight: 600;
-  font-family: "Rajdhani", sans-serif;
-  font-size: 1.15rem;
+  font-weight: 500;
+  font-family: var(--portal-font);
+  font-size: 1.05rem;
+}
+
+.meta a:hover {
+  color: var(--portal-primary);
 }
 
 .meta p {
   margin: 0.25rem 0 0;
-  color: #78909c;
+  color: var(--portal-muted);
   font-size: 0.88rem;
 }
 
 .meta .price {
-  color: #1565c0;
+  color: var(--portal-primary);
   font-weight: 600;
 }
 
@@ -116,31 +121,33 @@ h2 {
 
 .total {
   text-align: right;
+  font-weight: 500;
+  color: var(--portal-ink);
 }
 
 .summary {
-  background: #fff;
-  border: 1px solid #e3eaf1;
-  border-radius: 4px;
+  background: var(--portal-card);
+  border-radius: var(--portal-radius-lg);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   position: sticky;
   top: 5.5rem;
+  box-shadow: var(--portal-shadow);
 }
 
 .summary p {
   display: flex;
   justify-content: space-between;
   margin: 0;
-  color: #546e7a;
+  color: var(--portal-ink-secondary);
 }
 
 .summary .note {
   display: block;
   font-size: 0.85rem;
-  color: #90a4ae;
+  color: var(--portal-faint);
 }
 
 .summary a {

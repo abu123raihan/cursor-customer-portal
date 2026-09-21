@@ -1,26 +1,20 @@
 ---
 name: erp-review
-description: Architecture and code review gate for an ERP feature
+description: Review a Website portal UI change
 ---
 Scope: $ARGUMENTS
 
-Inspect the actual diff and documentation.
+Inspect the actual diff.
 
 Review:
-- module boundaries and layering
-- tenant isolation
-- authorization vs UI-only permission checks
-- API contract stability
-- migration safety
-- transaction boundaries
-- inventory ledger integrity
-- posted accounting immutability
-- audit coverage
-- error handling
-- test coverage of isolation and money/stock paths
-- documentation completeness
 
-Be strict. Do not modify business logic to hide findings.
+- UI module boundaries
+- typed `ApiService` usage (no invented endpoints)
+- no database access or stored database information
+- loading/empty/error states
+- documentation of any Agent API handoff
 
-Return APPROVE only if the change matches architecture rules and the approved plan.
+Migration safety, SQL, and server transactions belong to Agent API.
+
+Return APPROVE only if the change stays inside the website portal boundary.
 Otherwise return CHANGES REQUESTED with severity, file, and required fix.

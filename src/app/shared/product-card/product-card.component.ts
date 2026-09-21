@@ -2,7 +2,6 @@ import { CurrencyPipe } from "@angular/common";
 import { Component, Input, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
-import { MatChipsModule } from "@angular/material/chips";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -21,7 +20,6 @@ import { WishlistService } from "../../core/wishlist/wishlist.service";
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule,
     MatSnackBarModule,
     MatTooltipModule
   ],

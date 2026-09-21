@@ -1,5 +1,5 @@
-<div class="app green">
-  <mat-sidenav-container class="pages-container">
+<div class="app portal green">
+  <mat-sidenav-container class="portal-shell">
     <mat-sidenav mode="over" [opened]="mobileOpen()" (closedStart)="mobileOpen.set(false)" class="mobile-nav">
       <div class="mobile-head">
         <strong>{{ brand.name }}</strong>
@@ -14,24 +14,23 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <!-- Emporium top utility + primary header -->
       <mat-toolbar color="primary" class="top-toolbar">
         <div class="wrap toolbar-row top-row">
           <span class="hotline"><mat-icon>call</mat-icon> Hotline: {{ brand.phone }}</span>
           <span class="welcome">{{ brand.tagline }}</span>
           <div class="top-links">
-            <button mat-button type="button" [matMenuTriggerFor]="currencyMenu">USD <mat-icon>arrow_drop_down</mat-icon></button>
-            <mat-menu #currencyMenu="matMenu">
-              <button mat-menu-item type="button">USD</button>
-              <button mat-menu-item type="button">INR</button>
-            </mat-menu>
+            <span class="currency-label">₹ INR</span>
             <button mat-button type="button" [matMenuTriggerFor]="langMenu">ENGLISH <mat-icon>arrow_drop_down</mat-icon></button>
             <mat-menu #langMenu="matMenu">
               <button mat-menu-item type="button">ENGLISH</button>
             </mat-menu>
             <a mat-button routerLink="/wishlist">COMPARE (0)</a>
             <a mat-button routerLink="/wishlist">WISHLIST ({{ wishlist.count() }})</a>
-            <a mat-button routerLink="/account"><mat-icon>person</mat-icon> ACCOUNT <mat-icon>arrow_drop_down</mat-icon></a>
+            <a mat-button routerLink="/account">
+              <mat-icon>person</mat-icon>
+              {{ auth.user() ? auth.user()!.displayName : "ACCOUNT" }}
+              <mat-icon>arrow_drop_down</mat-icon>
+            </a>
           </div>
         </div>
 
@@ -65,7 +64,6 @@
         </div>
       </mat-toolbar>
 
-      <!-- Emporium white top navbar -->
       <mat-toolbar class="top-navbar mat-elevation-z2">
         <div class="wrap nav-row">
           @for (item of menus(); track item.id) {
@@ -73,10 +71,28 @@
               item.label | uppercase
             }}</a>
           }
+          @for (category of catalog.allCategories(); track category.id) {
+            <a [routerLink]="['/shop', category.slug]" routerLinkActive="active">{{ category.name | uppercase }}</a>
+          }
+          <a routerLink="/shop" [matMenuTriggerFor]="pagesMenu">PAGES <mat-icon>arrow_drop_down</mat-icon></a>
+          <mat-menu #pagesMenu="matMenu">
+            <a mat-menu-item routerLink="/cart">Cart</a>
+            <a mat-menu-item routerLink="/wishlist">Wishlist</a>
+            <a mat-menu-item routerLink="/account">Account</a>
+          </mat-menu>
+          <a routerLink="/contact" routerLinkActive="active">CONTACT</a>
         </div>
       </mat-toolbar>
 
-      <main class="theme-container main">
+      <main class="portal-main">
+        @if (catalog.loading()) {
+          <div class="catalog-status wrap">Loading catalog from API…</div>
+        } @else if (catalog.loadError()) {
+          <div class="catalog-status wrap error">
+            {{ catalog.loadError() }}
+            <button mat-stroked-button type="button" (click)="catalog.reload()">Retry</button>
+          </div>
+        }
         <router-outlet />
       </main>
 
@@ -110,11 +126,11 @@
             <p><mat-icon>schedule</mat-icon> {{ brand.hours }}</p>
           </div>
           <div>
-            <h4>{{ brand.name.toUpperCase() }}</h4>
-            <p>Material Design storefront inspired by Emporium electronics catalogue.</p>
+            <h4>{{ brand.legalName.toUpperCase() }}</h4>
+            <p>Catalog synced from cursor-node-api inventory for guest browse.</p>
           </div>
         </div>
-        <div class="wrap copyright">Copyright © {{ brand.name }}</div>
+        <div class="wrap copyright">Copyright © {{ brand.legalName }}</div>
       </footer>
     </mat-sidenav-content>
   </mat-sidenav-container>

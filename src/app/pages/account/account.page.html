@@ -1,32 +1,86 @@
 <section class="wrap page">
-  <div class="layout">
-    <div>
-      <p class="eyebrow">Customer portal</p>
-      <h1>Sign in to checkout</h1>
-      <p>
-        Guests can browse, cart, and wishlist freely. A customer account unlocks checkout, order
-        tracking, and GST invoice download.
-      </p>
-      <ul>
-        <li>Save multiple delivery addresses</li>
-        <li>Reorder previous site kits</li>
-        <li>Download tax invoices</li>
-      </ul>
-      <a mat-stroked-button color="primary" routerLink="/shop">Continue shopping</a>
+  @if (user(); as sessionUser) {
+    <div class="layout signed-in">
+      <div>
+        <p class="eyebrow">Customer portal</p>
+        <h1>Hello, {{ sessionUser.displayName }}</h1>
+        <p>You are signed in as {{ sessionUser.email }}. Guests can browse freely; your account unlocks checkout and GST invoices.</p>
+        <a mat-stroked-button color="primary" routerLink="/shop">Continue shopping</a>
+      </div>
+      <div class="card">
+        <h2>Account</h2>
+        <p class="meta">{{ sessionUser.email }}</p>
+        <button mat-flat-button color="primary" type="button" (click)="signOut()">Sign out</button>
+      </div>
     </div>
+  } @else if (mode() === "forgot") {
+    <div class="layout">
+      <div>
+        <p class="eyebrow">Customer portal</p>
+        <h1>Forgot password</h1>
+        <p>
+          Enter the email for your customer account. We will send a reset link so you can choose a
+          new password and sign in again.
+        </p>
+        <button mat-stroked-button color="primary" type="button" (click)="showSignIn()">Back to sign in</button>
+      </div>
 
-    <form class="card" [formGroup]="form" (ngSubmit)="submit()">
-      <h2>Welcome back</h2>
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" autocomplete="username" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" autocomplete="current-password" />
-      </mat-form-field>
-      <button mat-flat-button color="primary" type="submit">Sign in</button>
-      <p class="hint">Demo auth wiring comes from the Website / Identity module on the API.</p>
-    </form>
-  </div>
+      <form class="card" [formGroup]="forgotForm" (ngSubmit)="submitForgot()">
+        <h2>Reset link</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="username" />
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit" [disabled]="submitting()">
+          {{ submitting() ? "Sending…" : "Send reset link" }}
+        </button>
+        <p class="hint">
+          Check your inbox (and spam). The address must already have a customer account.
+          Without SMTP in .env, a mail preview tab opens instead.
+        </p>
+      </form>
+    </div>
+  } @else {
+    <div class="layout">
+      <div>
+        <p class="eyebrow">Customer portal</p>
+        <h1>Sign in to checkout</h1>
+        <p>
+          Guests can browse, cart, and wishlist freely. Enter your email and password to sign in.
+          If you do not have an account yet, we will create one for this store.
+        </p>
+        <ul>
+          <li>Save multiple delivery addresses</li>
+          <li>Reorder previous site kits</li>
+          <li>Download tax invoices</li>
+        </ul>
+        <a mat-stroked-button color="primary" routerLink="/shop">Continue shopping</a>
+      </div>
+
+      <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+        <h2>Welcome</h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Your name (new accounts)</mat-label>
+          <input matInput type="text" formControlName="displayName" autocomplete="name" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" autocomplete="username" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" autocomplete="current-password" />
+          @if (form.controls.password.touched && form.controls.password.hasError("minlength")) {
+            <mat-hint>At least 8 characters</mat-hint>
+          }
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit" [disabled]="submitting()">
+          {{ submitting() ? "Please wait…" : "Sign in / Create account" }}
+        </button>
+        <p class="hint">
+          <button class="linkish" type="button" (click)="showForgot()">Forgot Password</button>
+        </p>
+      </form>
+    </div>
+  }
 </section>

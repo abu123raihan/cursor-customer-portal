@@ -1,0 +1,32 @@
+// Design tokens for cursor-customer-portal
+:root {
+  --portal-primary: #689f38;
+  --portal-primary-dark: #558b2f;
+  --portal-primary-deep: #33691e;
+  --portal-primary-light: #dcedc8;
+  --portal-accent: #f44336;
+  --portal-star: #fbc02d;
+  --portal-ink: rgba(0, 0, 0, 0.87);
+  --portal-ink-secondary: rgba(0, 0, 0, 0.6);
+  --portal-muted: rgba(0, 0, 0, 0.54);
+  --portal-faint: rgba(0, 0, 0, 0.38);
+  --portal-surface: #f5f5f5;
+  --portal-surface-alt: #eeeeee;
+  --portal-card: #ffffff;
+  --portal-border: #e0e0e0;
+  --portal-footer: #424242;
+  --portal-radius: 2px;
+  --portal-radius-lg: 4px;
+  --portal-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --portal-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --portal-font: Roboto, "Helvetica Neue", Arial, sans-serif;
+  --portal-wrap: min(1280px, calc(100% - 24px));
+  --portal-header: #689f38;
+
+  color-scheme: light;
+  font-family: var(--portal-font);
+  color: var(--portal-ink);
+  background: var(--portal-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

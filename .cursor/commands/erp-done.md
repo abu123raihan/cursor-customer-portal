@@ -1,13 +1,18 @@
 ---
 name: erp-done
-description: Verify ERP feature Definition of Done
+description: Verify Website portal UI Definition of Done
 ---
 Feature: $ARGUMENTS
 
-Inspect actual implementation.
+Inspect actual UI implementation.
 
 Verify applicable:
-database, migration, model, validation, API, permissions, tenant isolation, business logic, errors, audit logging, tests, documentation.
 
-Return PASS only if all applicable requirements are satisfied.
-Otherwise return BLOCKED with missing items.
+- screens and navigation
+- typed Agent API calls only
+- loading, empty, error, validation
+- no database connection or stored database information
+- Agent API requested (as Website portal) for any missing contract
+
+Return PASS only if UI requirements are satisfied and no API/DB work leaked into this folder.
+Otherwise return BLOCKED with missing items. Database/API completeness is Agent API's gate, not this one.

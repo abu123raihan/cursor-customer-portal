@@ -1,29 +1,12 @@
 ---
-description: ERP database and multi-tenant database standards
-alwaysApply: false
+description: Database is out of scope for cursor-customer-portal
+alwaysApply: true
 ---
 
-# DATABASE
+# DATABASE — out of scope
 
-Use MySQL + Sequelize.
+This folder does not own the database.
 
-Prefer UUID or the project's approved key strategy consistently.
+Never add MySQL, Sequelize, SQL, connection pools, `.env` DB credentials, or migrations here.
 
-Company-owned tables must have tenant/company ownership.
-
-Use:
-primary keys
-foreign keys
-unique constraints
-indexes
-timestamps
-audit fields
-appropriate soft-delete strategy where required
-
-Use migrations.
-
-Prefer additive schema changes.
-
-Do not drop or rename production columns without an explicit migration strategy.
-
-Inventory and accounting data require strong transactional integrity.
+Schema, tenant isolation, and data changes belong to **Agent API** (`cursor-node-api`).

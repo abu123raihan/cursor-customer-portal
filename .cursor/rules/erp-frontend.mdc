@@ -1,5 +1,5 @@
 ---
-description: Angular ERP admin and website standards
+description: Angular AK Fusion website storefront standards
 globs:
   - "src/**/*.ts"
   - "src/**/*.html"
@@ -9,15 +9,19 @@ alwaysApply: false
 
 # FRONTEND
 
-Use Angular 22 (zoneless, no `zone.js`) for cursor-admin-ui and cursor-customer-portal.
+Use Angular 22 (zoneless, no `zone.js`) for cursor-customer-portal.
 
 Requires Node.js `^22.22.3 || ^24.15.0 || >=26.0.0` and TypeScript 6.0.x.
 
-Angular applications consume ERP-API.
+This Angular app consumes **Agent API** (`cursor-node-api`) over HTTP only.
 
-Never connect Angular directly to MySQL.
+Never connect Angular directly to MySQL or any database.
+
+Never store database information in this repo (credentials, schema, SQL, migrations).
 
 Never duplicate server-side business logic in Angular.
+
+If an endpoint is missing, request Agent API and identify as **Website portal**. Do not invent it here.
 
 Use typed API models/services.
 
@@ -26,7 +30,5 @@ Do not invent endpoints.
 Respect API contracts.
 
 Implement loading, empty, error and validation states.
-
-Admin UI must enforce permission-aware visibility but API authorization remains the security boundary.
 
 Website must be responsive and mobile-friendly.

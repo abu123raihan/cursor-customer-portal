@@ -1,9 +1,9 @@
-# Documentation
+# Website portal docs
 
-Architecture, tenancy, security, database, API, modules, ledgers, frontend rules, and Definition of Done are owned by the command pack:
+This repo documents **UI only**. Database schema, migrations, and API contracts are owned by Agent API (`cursor-node-api`).
 
-`F:\Cursor\Project\docs`
+Do not copy or store database information here.
 
-Start at `F:\Cursor\Project\docs\README.md`.
+When this portal needs an API change, write a request as **Website portal** under:
 
-Do not fork conflicting architecture in this repository. Update the master docs when a module changes contracts or isolation rules, then keep this pointer current.
+`D:\Cursor\cursor-node-api\docs\requests\`

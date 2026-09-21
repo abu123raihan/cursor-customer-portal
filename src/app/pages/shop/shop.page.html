@@ -1,26 +1,30 @@
 <section class="shop-page">
-  <mat-card class="breadcrumb light-block">
-    <a routerLink="/"><mat-icon>home</mat-icon> Homepage</a>
-    <span>»</span>
-    <a routerLink="/shop">All Products</a>
-    <span>»</span>
-    <strong>{{ title() }}</strong>
-  </mat-card>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a routerLink="/home"><mat-icon>home</mat-icon><span>Homepage</span></a>
+    <span class="sep" aria-hidden="true">»</span>
+    @if (category(); as cat) {
+      <a routerLink="/shop">All Products</a>
+      <span class="sep" aria-hidden="true">»</span>
+      <span class="current">{{ cat.name | uppercase }}</span>
+    } @else {
+      <span class="current">All Products</span>
+    }
+  </nav>
 
   <div class="shop-layout wrap">
     <aside class="filter-sidenav">
       <h3>CATEGORIES</h3>
       <div class="cat-tree">
         <a routerLink="/shop" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All Categories</a>
-        @for (category of catalog.allCategories(); track category.id) {
-          <a [routerLink]="['/shop', category.slug]" routerLinkActive="active">{{ category.name }}</a>
+        @for (cat of catalog.allCategories(); track cat.id) {
+          <a [routerLink]="['/shop', cat.slug]" routerLinkActive="active">{{ cat.name }}</a>
         }
       </div>
 
       <h3>PRICE</h3>
       <div class="price-filter">
-        <p>From: ${{ priceMin() }}</p>
-        <mat-slider min="0" max="3000" step="10" discrete>
+        <p>From: ₹{{ priceMin() | number: "1.0-0" }}</p>
+        <mat-slider [min]="0" [max]="priceCeiling()" [step]="10" discrete>
           <input
             matSliderStartThumb
             [ngModel]="priceMin()"
@@ -34,7 +38,7 @@
             name="priceMax"
           />
         </mat-slider>
-        <p>To: ${{ priceMax() }}</p>
+        <p>To: ₹{{ priceMax() | number: "1.0-0" }}</p>
       </div>
 
       <h3>COLOR</h3>
@@ -44,22 +48,19 @@
         }
       </div>
 
-      <h3>SIZE</h3>
-      <div class="size-grid">
-        @for (size of sizes; track size) {
-          <button type="button" class="size-chip">{{ size }}</button>
-        }
-      </div>
-
       <h3>CONDITION</h3>
-      <mat-checkbox checked>New</mat-checkbox>
-      <mat-checkbox>Used</mat-checkbox>
-      <mat-checkbox>Not Specified</mat-checkbox>
-
-      <div class="brand-banner">
-        <p>NOW STARTING AT</p>
-        <strong>$1379</strong>
+      <div class="condition-list">
+        <mat-checkbox checked>New</mat-checkbox>
+        <mat-checkbox>Used</mat-checkbox>
+        <mat-checkbox>Not Specified</mat-checkbox>
       </div>
+
+      @if (catalog.featured()[0]; as start) {
+        <div class="brand-banner">
+          <p>NOW STARTING AT</p>
+          <strong>{{ start.price | currency: "INR" : "symbol" : "1.0-0" : "en-IN" }}</strong>
+        </div>
+      }
     </aside>
 
     <div class="products-pane">
@@ -82,22 +83,26 @@
         </mat-form-field>
 
         <div class="view-toggles">
-          <button mat-icon-button type="button" [class.active]="view() === 'list'" (click)="view.set('list')">
+          <button mat-icon-button type="button" [class.active]="view() === 'list'" (click)="view.set('list')" aria-label="List view">
             <mat-icon>view_list</mat-icon>
           </button>
-          <button mat-icon-button type="button" [class.active]="view() === 'grid'" (click)="view.set('grid')">
+          <button mat-icon-button type="button" [class.active]="view() === 'comfortable'" (click)="view.set('comfortable')" aria-label="3-column grid">
             <mat-icon>view_module</mat-icon>
           </button>
-          <button mat-icon-button type="button" [class.active]="view() === 'comfortable'" (click)="view.set('comfortable')">
+          <button mat-icon-button type="button" [class.active]="view() === 'grid'" (click)="view.set('grid')" aria-label="4-column grid">
             <mat-icon>view_comfy</mat-icon>
           </button>
         </div>
       </div>
 
-      @if (products().length === 0) {
-        <p class="empty text-muted">No products match this filter.</p>
+      @if (catalog.loading()) {
+        <p class="empty text-muted">Loading products from cursor-node-api…</p>
+      } @else if (products().length === 0) {
+        <p class="empty text-muted">
+          No online products in this category yet. Mark items Show Online in admin Products.
+        </p>
       } @else {
-        <div class="product-grid" [class.list]="view() === 'list'" [class.dense]="view() === 'grid'">
+        <div class="product-grid" [class.list]="view() === 'list'" [class.dense]="view() === 'grid'" [class.comfortable]="view() === 'comfortable'">
           @for (product of products(); track product.id) {
             <app-product-card [product]="product" />
           }

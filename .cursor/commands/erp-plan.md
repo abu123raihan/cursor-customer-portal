@@ -1,23 +1,21 @@
 ---
 name: erp-plan
-description: Plan one ERP feature before implementation
+description: Plan one Website portal UI feature (no database, no API implementation)
 ---
 Task: $ARGUMENTS
 
-Inspect existing code and documentation first.
+Inspect existing website UI and current Agent API contracts first.
 
 Produce:
-- business workflow
-- database changes
-- API contract
-- permissions
-- tenant impact
-- inventory impact
-- accounting impact
-- frontend impact
+
+- user workflow on the storefront
+- screens, routes, and components
+- existing `ApiService` methods to reuse
+- gaps that Agent API must fill
+- loading / empty / error / validation states
 - tests
-- documentation
-- dependencies
-- Definition of Done
+- Definition of Done for the UI only
+
+If API, schema, or persistence is required, do not design it here. List a handoff for Agent API that starts with **I am from the Website portal**.
 
 Do not modify production code in planning mode.

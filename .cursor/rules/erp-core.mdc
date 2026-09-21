@@ -1,48 +1,24 @@
 ---
-description: Complete ERP architecture rules
+description: Website portal core rules — UI only, no database
 alwaysApply: true
 ---
 
-# ERP CORE RULES
+# AK Fusion — Website portal core
+
+Product name: **AK Fusion**.
+
+This repo is **cursor-customer-portal** (Website portal). It is not the API and not the database.
 
 Three independent repositories:
-1. cursor-node-api — the API. Only this talks to MySQL. All business logic and DB access live here. ERP-API is cursor-node-api; it owns the database.
-2. cursor-admin-ui — the admin portal.
-3. cursor-customer-portal — the customer website / storefront.
 
-One central MySQL database.
+1. **cursor-node-api** — Agent API. Owns MySQL and business logic.
+2. **cursor-admin-ui** — admin portal (out of scope here).
+3. **cursor-customer-portal** — this customer website / storefront. HTTP client only.
 
-ERP-API (cursor-node-api) is the single source of business logic and database access.
+Frontend flow: pages/components → `ApiService` → Agent API.
 
-Frontend applications must never access MySQL directly. They call cursor-node-api only.
+Never trust a client-supplied `company_id` for authorization.
 
-The system is multi-tenant.
+If a change needs persistence, schema, or a new HTTP contract: coordinate with Agent API and say **I am from the Website portal**. Do not implement that work here.
 
-Company-owned records must be isolated by tenant/company context.
-
-Never trust a client-supplied company_id for authorization.
-
-Modules must be separated by business domain.
-
-Avoid giant files and tightly coupled modules.
-
-Use:
-routes -> controllers -> services -> repositories -> models/database
-
-Frontend:
-pages/components -> services -> API
-
-Every financial operation must be auditable.
-
-Every stock-changing operation must produce a traceable inventory ledger movement.
-
-Do not change posted accounting history silently.
-
-Do not change inventory silently.
-
-Use migrations for schema changes.
-
-Do not mark work complete without tests and documentation.
-
-Before large implementation:
-PLAN -> INSPECT -> DESIGN -> IMPLEMENT -> TEST -> REVIEW -> DOCUMENT
+Do not mark UI work complete if it depends on an endpoint Agent API has not shipped.
