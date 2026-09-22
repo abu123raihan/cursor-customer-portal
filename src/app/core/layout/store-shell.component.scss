@@ -83,13 +83,39 @@
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: #fff;
   text-decoration: none;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 18px;
   letter-spacing: 0.04em;
   margin-right: 12px;
   white-space: nowrap;
+  min-width: 0;
+}
+
+.logo-mark {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.35);
+}
+
+.logo-mark--footer {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.logo-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logo:hover {
@@ -349,6 +375,12 @@
   color: #aed581;
 }
 
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .copyright {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding: 14px 0 20px;
@@ -364,6 +396,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  padding: 4px 0 8px;
+}
+
+.mobile-head .logo-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.mobile-head strong {
+  flex: 1;
+  min-width: 0;
 }
 
 .mobile-nav a {
@@ -418,6 +463,16 @@
   }
 
   .logo {
-    font-size: 17px;
+    font-size: 14px;
+  }
+
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+
+  .logo-text {
+    max-width: 9rem;
   }
 }

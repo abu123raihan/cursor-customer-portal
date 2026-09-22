@@ -4,9 +4,9 @@
 export const STORE_CURRENCY = "INR" as const;
 
 export const STORE_BRAND = {
-  name: "AK Electricals",
-  legalName: "AK Complete Solution",
-  tagline: "Welcome to our market!",
+  name: "AK Fussion",
+  legalName: "AK Fussion",
+  tagline: "Smarter business, together",
   phone: "(+91) 8876900903",
   email: "akelectricalsbprd@gmail.com",
   address: "12 Industrial Estate, Pune, Maharashtra 411019",

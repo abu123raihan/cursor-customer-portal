@@ -2,6 +2,7 @@
   <mat-sidenav-container class="portal-shell">
     <mat-sidenav mode="over" [opened]="mobileOpen()" (closedStart)="mobileOpen.set(false)" class="mobile-nav">
       <div class="mobile-head">
+        <img class="logo-mark" src="/brand/ak-fusion-logo.png" alt="AK Fussion" width="40" height="40" />
         <strong>{{ brand.name }}</strong>
         <button mat-icon-button type="button" (click)="closeMobile()"><mat-icon>close</mat-icon></button>
       </div>
@@ -38,7 +39,16 @@
           <button class="menu-btn" mat-icon-button type="button" (click)="mobileOpen.set(true)">
             <mat-icon>menu</mat-icon>
           </button>
-          <a routerLink="/" class="logo">{{ brand.name.toUpperCase() }}</a>
+          <a routerLink="/" class="logo" [attr.aria-label]="brand.name">
+            <img
+              class="logo-mark"
+              src="/brand/ak-fusion-logo.png"
+              alt="AK Fussion"
+              width="48"
+              height="48"
+            />
+            <span class="logo-text">{{ brand.name.toUpperCase() }}</span>
+          </a>
 
           <form class="search-bar" (ngSubmit)="submitSearch()">
             <mat-select [(ngModel)]="searchCategory" name="category" class="cat-select">
@@ -125,7 +135,14 @@
             <p><mat-icon>mail_outline</mat-icon> {{ brand.email }}</p>
             <p><mat-icon>schedule</mat-icon> {{ brand.hours }}</p>
           </div>
-          <div>
+          <div class="footer-brand">
+            <img
+              class="logo-mark logo-mark--footer"
+              src="/brand/ak-fusion-logo.png"
+              alt="AK Fussion"
+              width="72"
+              height="72"
+            />
             <h4>{{ brand.legalName.toUpperCase() }}</h4>
             <p>Catalog synced from cursor-node-api inventory for guest browse.</p>
           </div>

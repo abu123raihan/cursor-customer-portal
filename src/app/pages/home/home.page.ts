@@ -27,7 +27,7 @@ export class HomePage implements OnInit, OnDestroy {
       {
         eyebrow: name,
         title: `Shop ${name} online`,
-        text: "Guest catalog synced from AK Fusion inventory. Add to cart without signing in.",
+        text: "Guest catalog synced from AK Fussion inventory. Add to cart without signing in.",
         cta: "Shop bestsellers",
         link: "/shop",
         image:

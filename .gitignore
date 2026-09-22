@@ -5,4 +5,7 @@ Thumbs.db
 /out-tsc
 /.angular
 .env
+.env.*
+!.env.example
+src/environments/environment.generated.ts
 *.log
