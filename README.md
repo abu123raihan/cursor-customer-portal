@@ -21,6 +21,13 @@ API base URL: from `.env` (`API_BASE_URL`, default `http://localhost:3000`)
 
 This portal talks to Agent API over HTTP only. Do not put database credentials here.
 
+## Deploy (main → dev only)
+
+**Strict:** `main` always targets **https://dev.akfusion.com** and **https://dev.api.akfusion.com**.  
+Do not deploy this repo to `akfusion.com` or call `api.akfusion.com`.
+
+See [docs/deploy-dev.md](docs/deploy-dev.md).
+
 ## Layout
 
 ```

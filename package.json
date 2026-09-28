@@ -11,6 +11,7 @@
     "sync-env": "node scripts/sync-env.mjs",
     "start": "node scripts/sync-env.mjs && ng serve --port 4300",
     "build": "node scripts/sync-env.mjs --production && ng build",
+    "deploy:dev": "node scripts/deploy-sftp.mjs",
     "watch": "node scripts/sync-env.mjs && ng build --watch --configuration development",
     "typecheck": "node scripts/sync-env.mjs && ng build --configuration development"
   },

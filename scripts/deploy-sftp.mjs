@@ -1,7 +1,14 @@
 /**
- * One-shot Hostinger SFTP deploy. Credentials via env only — never commit secrets.
+ * Hostinger SFTP deploy for cursor-customer-portal main → dev.akfusion.com only.
+ * Credentials via env only — never commit secrets.
  *
- * DEPLOY_HOST DEPLOY_PORT DEPLOY_USER DEPLOY_PASS DEPLOY_LOCAL_DIR [DEPLOY_REMOTE_DIR]
+ * Required: DEPLOY_HOST DEPLOY_PORT DEPLOY_USER DEPLOY_PASS DEPLOY_LOCAL_DIR
+ * Optional: DEPLOY_REMOTE_DIR (default domains/dev.akfusion.com/public_html)
+ *
+ * Strict mapping:
+ *   main branch build → https://dev.akfusion.com
+ *   API → https://dev.api.akfusion.com
+ * Do not use this script against akfusion.com / api.akfusion.com.
  */
 import { Client } from "ssh2";
 import { createReadStream, readdirSync, statSync } from "node:fs";
@@ -12,7 +19,7 @@ const port = Number(process.env.DEPLOY_PORT || "22");
 const username = process.env.DEPLOY_USER;
 const password = process.env.DEPLOY_PASS;
 const localDir = process.env.DEPLOY_LOCAL_DIR;
-const remoteHint = process.env.DEPLOY_REMOTE_DIR || "";
+const remoteHint = process.env.DEPLOY_REMOTE_DIR || "domains/dev.akfusion.com/public_html";
 
 if (!host || !username || !password || !localDir) {
   console.error("Missing DEPLOY_HOST / DEPLOY_USER / DEPLOY_PASS / DEPLOY_LOCAL_DIR");
@@ -124,21 +131,17 @@ conn
 
       let remoteDir = remoteHint;
       if (!remoteDir) {
-        const candidates = [
-          "domains/akfusion.com/public_html",
-          "public_html",
-          "domains/dev.akfusion.com/public_html"
-        ];
-        for (const c of candidates) {
-          const check = await runRemote(conn, `test -d ${c} && echo OK:${c}`);
-          if (check.stdout.includes(`OK:${c}`)) {
-            remoteDir = c;
-            break;
-          }
-        }
+        remoteDir = "domains/dev.akfusion.com/public_html";
       }
-      if (!remoteDir) {
-        throw new Error("Could not find public_html. Set DEPLOY_REMOTE_DIR.");
+      const allowed = "domains/dev.akfusion.com/public_html";
+      if (remoteDir !== allowed && !remoteDir.endsWith("/dev.akfusion.com/public_html")) {
+        throw new Error(
+          `Refusing deploy to "${remoteDir}". This repo deploys only to ${allowed}.`
+        );
+      }
+      const check = await runRemote(conn, `test -d ${remoteDir} && echo OK:${remoteDir}`);
+      if (!check.stdout.includes(`OK:${remoteDir}`)) {
+        throw new Error(`Remote dir missing: ${remoteDir}`);
       }
       console.log(`Using remote dir: ${remoteDir}`);
 
