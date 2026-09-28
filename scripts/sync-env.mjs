@@ -48,7 +48,7 @@ const env = {
 
 const apiBaseUrl =
   (production ? env.API_BASE_URL_PRODUCTION || env.API_BASE_URL : env.API_BASE_URL) ||
-  (production ? "https://dev.api.akfusion.com" : "http://localhost:3000");
+  (production ? "https://dev-api.akfusion.com" : "http://localhost:3000");
 const storeHost =
   (production ? env.STORE_HOST_PRODUCTION || env.STORE_HOST : env.STORE_HOST) ||
   (production ? "dev.akfusion.com" : "demo");

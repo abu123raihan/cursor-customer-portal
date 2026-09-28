@@ -5,7 +5,7 @@
 | Item | Value |
 | --- | --- |
 | Website | `https://dev.akfusion.com` |
-| Agent API | `https://dev.api.akfusion.com` |
+| Agent API | `https://dev-api.akfusion.com` |
 | SSH host | `dev.akfusion.com` (use IP if DNS fails) |
 | SSH port | `65002` |
 | Remote dir | `domains/dev.akfusion.com/public_html` |

@@ -23,7 +23,7 @@ This portal talks to Agent API over HTTP only. Do not put database credentials h
 
 ## Deploy (main → dev only)
 
-**Strict:** `main` always targets **https://dev.akfusion.com** and **https://dev.api.akfusion.com**.  
+**Strict:** `main` always targets **https://dev.akfusion.com** and **https://dev-api.akfusion.com**.  
 Do not deploy this repo to `akfusion.com` or call `api.akfusion.com`.
 
 See [docs/deploy-dev.md](docs/deploy-dev.md).

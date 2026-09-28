@@ -7,7 +7,7 @@
  *
  * Strict mapping:
  *   main branch build → https://dev.akfusion.com
- *   API → https://dev.api.akfusion.com
+ *   API → https://dev-api.akfusion.com
  * Do not use this script against akfusion.com / api.akfusion.com.
  */
 import { Client } from "ssh2";
