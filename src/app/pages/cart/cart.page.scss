@@ -1,105 +1,96 @@
-.wrap {
-  width: var(--portal-wrap);
-  margin-inline: auto;
-}
-
 .page {
-  padding: 2rem 0 3rem;
+  padding-block: 24px 48px;
 }
 
 .head {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  align-items: end;
-  margin-bottom: 1.5rem;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
 }
 
 .eyebrow {
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.75rem;
-  font-weight: 700;
+  margin: 0 0 4px;
   color: var(--portal-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-h1,
-h2 {
-  font-family: var(--portal-font);
-  color: var(--portal-ink);
-  margin: 0.25rem 0;
-  font-weight: 500;
+.head h1 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .head p {
-  margin: 0;
+  margin: 6px 0 0;
   color: var(--portal-muted);
 }
 
 .empty {
   text-align: center;
-  padding: 3rem 1rem;
-  background: var(--portal-card);
-  border-radius: var(--portal-radius-lg);
-  box-shadow: var(--portal-shadow);
+  padding: 48px 16px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eee;
 }
 
 .empty mat-icon {
-  font-size: 3rem;
-  width: 3rem;
-  height: 3rem;
-  color: var(--portal-faint);
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--portal-primary);
 }
 
 .layout {
   display: grid;
-  grid-template-columns: 1.6fr 0.9fr;
-  gap: 1.25rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  gap: 18px;
+  max-width: 100%;
 }
 
 .lines {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
+  min-width: 0;
 }
 
 .line {
   display: grid;
-  grid-template-columns: 6rem 1fr auto auto;
-  gap: 1rem;
+  grid-template-columns: 88px minmax(0, 1fr) auto auto;
+  gap: 12px;
   align-items: center;
-  background: var(--portal-card);
-  border-radius: var(--portal-radius-lg);
-  padding: 0.85rem;
-  box-shadow: var(--portal-shadow);
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 0;
+}
+
+.meta {
+  min-width: 0;
 }
 
 .thumb img {
-  width: 6rem;
-  height: 6rem;
+  width: 88px;
+  height: 88px;
   object-fit: cover;
-  border-radius: var(--portal-radius);
+  border-radius: 8px;
   display: block;
 }
 
 .meta a {
   color: var(--portal-ink);
   text-decoration: none;
-  font-weight: 500;
-  font-family: var(--portal-font);
-  font-size: 1.05rem;
-}
-
-.meta a:hover {
-  color: var(--portal-primary);
+  font-weight: 600;
 }
 
 .meta p {
-  margin: 0.25rem 0 0;
+  margin: 4px 0 0;
   color: var(--portal-muted);
-  font-size: 0.88rem;
+  font-size: 0.82rem;
 }
 
 .meta .price {
@@ -110,68 +101,50 @@ h2 {
 .qty {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-}
-
-.qty span {
-  min-width: 1.5rem;
-  text-align: center;
-  font-weight: 600;
-}
-
-.total {
-  text-align: right;
-  font-weight: 500;
-  color: var(--portal-ink);
+  gap: 6px;
 }
 
 .summary {
-  background: var(--portal-card);
-  border-radius: var(--portal-radius-lg);
-  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 16px;
+  align-self: start;
+  position: sticky;
+  top: 120px;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  position: sticky;
-  top: 5.5rem;
-  box-shadow: var(--portal-shadow);
+  gap: 10px;
+}
+
+.summary h2 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
 }
 
 .summary p {
   display: flex;
   justify-content: space-between;
   margin: 0;
-  color: var(--portal-ink-secondary);
 }
 
 .summary .note {
   display: block;
-  font-size: 0.85rem;
-  color: var(--portal-faint);
+  color: var(--portal-muted);
+  font-size: 0.8rem;
 }
 
 .summary a {
-  width: 100%;
+  text-align: center;
 }
 
-@media (max-width: 900px) {
-  .layout {
+@media (max-width: 800px) {
+  .layout,
+  .line {
     grid-template-columns: 1fr;
   }
 
-  .line {
-    grid-template-columns: 5rem 1fr;
-  }
-
-  .qty,
-  .total {
-    grid-column: 2;
-  }
-
-  .total {
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .summary {
+    position: static;
   }
 }

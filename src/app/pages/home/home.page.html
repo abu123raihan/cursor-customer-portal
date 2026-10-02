@@ -1,122 +1,140 @@
-<section class="hero" aria-label="Featured promotions">
-  @for (slide of slides(); track slide.title; let i = $index) {
-    <article class="slide" [class.active]="slideIndex() === i" [style.background-image]="'url(' + slide.image + ')'">
-      <div class="overlay">
-        <div class="wrap copy">
-          <p class="eyebrow">{{ slide.eyebrow }}</p>
-          <h1>{{ slide.title }}</h1>
-          <p class="lead">{{ slide.text }}</p>
-          <a mat-flat-button color="accent" [routerLink]="slide.link">{{ slide.cta }}</a>
-        </div>
-      </div>
-    </article>
-  }
-  <div class="hero-controls wrap">
-    <button mat-mini-fab type="button" color="primary" aria-label="Previous slide" (click)="prev()">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <div class="dots">
-      @for (slide of slides(); track slide.title; let i = $index) {
-        <button type="button" [class.active]="slideIndex() === i" [attr.aria-label]="'Go to slide ' + (i + 1)" (click)="go(i)"></button>
-      }
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="kicker">{{ brand.name }} marketplace</p>
+      <h1>{{ banners[0].title }}</h1>
+      <p>{{ banners[0].subtitle }}</p>
+      <a class="cta" [routerLink]="banners[0].link">{{ banners[0].cta }}</a>
     </div>
-    <button mat-mini-fab type="button" color="primary" aria-label="Next slide" (click)="next()">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
+    <div class="hero-badge" aria-hidden="true">
+      <span>UP TO</span>
+      <strong>80% OFF*</strong>
+    </div>
   </div>
 </section>
 
-<section class="wrap features">
-  <article>
-    <mat-icon>verified</mat-icon>
-    <div>
-      <h3>ISI-marked stock</h3>
-      <p>Quality-checked inventory for site and retail installs.</p>
-    </div>
-  </article>
-  <article>
-    <mat-icon>local_shipping</mat-icon>
-    <div>
-      <h3>Fast dispatch</h3>
-      <p>Same-day courier from Pune on orders before 2 PM.</p>
-    </div>
-  </article>
-  <article>
-    <mat-icon>support_agent</mat-icon>
-    <div>
-      <h3>Trade support</h3>
-      <p>Dedicated desk for electricians and contractors.</p>
-    </div>
-  </article>
-  <article>
-    <mat-icon>receipt_long</mat-icon>
-    <div>
-      <h3>GST invoices</h3>
-      <p>Account checkout unlocks invoices and order history.</p>
-    </div>
-  </article>
+<section class="trust">
+  <div class="wrap trust-row">
+    <div><span class="dot"></span> 7 Days Easy Return</div>
+    <div><span class="dot"></span> Cash on Delivery</div>
+    <div><span class="dot"></span> Lowest Prices</div>
+  </div>
 </section>
 
-<section class="wrap section">
-  <div class="section-head">
-    <div>
-      <p class="eyebrow">Collections</p>
-      <h2>Shop by category</h2>
-    </div>
-    <a mat-stroked-button color="primary" routerLink="/shop">View all</a>
-  </div>
-  <div class="category-grid">
+<section class="cat-rail">
+  <div class="wrap rail-row">
     @for (category of catalog.allCategories(); track category.id) {
-      <a class="category-card" [routerLink]="['/shop', category.slug]">
-        <img [src]="category.image" [alt]="category.name" loading="lazy" />
-        <div>
-          <h3>{{ category.name }}</h3>
-          <p>{{ category.description }}</p>
-        </div>
+      <a class="rail-item" [routerLink]="['/shop', category.slug]">
+        <span class="thumb"><img [src]="category.image" [alt]="category.name" loading="lazy" /></span>
+        <span class="label">{{ category.name }}</span>
       </a>
     }
   </div>
 </section>
 
-<section class="wrap section">
+<section class="wrap products-you">
   <div class="section-head">
     <div>
-      <p class="eyebrow">Featured</p>
-      <h2>Bestsellers this week</h2>
+      <h2>Products For You</h2>
+      <p class="count">{{ filteredProducts().length }} products</p>
     </div>
-    <a mat-stroked-button color="primary" routerLink="/shop">Shop products</a>
+    <a routerLink="/shop">VIEW ALL</a>
   </div>
-  <div class="product-grid">
-    @for (product of catalog.featured(); track product.id) {
-      <app-product-card [product]="product" />
-    }
+
+  <div class="home-filters" aria-label="Product filters">
+    <div class="chip-row">
+      <button
+        type="button"
+        class="chip"
+        [class.active]="filterCategory() === 'all'"
+        (click)="setCategory('all')"
+      >
+        All
+      </button>
+      @for (category of catalog.allCategories(); track category.id) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="filterCategory() === category.slug"
+          (click)="setCategory(category.slug)"
+        >
+          {{ category.name }}
+        </button>
+      }
+    </div>
+
+    <div class="filter-controls">
+      <label>
+        Sort by
+        <select [ngModel]="filterSort()" (ngModelChange)="filterSort.set($event)">
+          <option value="default">Relevance</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+          <option value="discount">Biggest Discount</option>
+        </select>
+      </label>
+
+      <label>
+        Max price
+        <div class="range-wrap">
+          <input
+            type="range"
+            [min]="100"
+            [max]="priceCeiling()"
+            step="50"
+            [ngModel]="filterMaxPrice()"
+            (ngModelChange)="filterMaxPrice.set(+$event)"
+          />
+          <span>₹{{ filterMaxPrice() }}</span>
+        </div>
+      </label>
+
+      <label>
+        Min rating
+        <select [ngModel]="filterMinRating()" (ngModelChange)="filterMinRating.set(+$event)">
+          <option [ngValue]="0">Any</option>
+          <option [ngValue]="3">3★ & up</option>
+          <option [ngValue]="4">4★ & up</option>
+          <option [ngValue]="4.5">4.5★ & up</option>
+        </select>
+      </label>
+
+      <label class="check">
+        <input
+          type="checkbox"
+          [ngModel]="filterOnSale()"
+          (ngModelChange)="filterOnSale.set($event)"
+        />
+        On sale only
+      </label>
+
+      <button type="button" class="clear" (click)="clearFilters()">Clear</button>
+    </div>
   </div>
+
+  @if (filteredProducts().length === 0) {
+    <p class="empty">No products match these filters. Try clearing filters.</p>
+  } @else {
+    <div class="product-grid">
+      @for (product of filteredProducts(); track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  }
 </section>
 
-<section class="promo wrap">
-  <div class="promo-copy">
-    <p class="eyebrow">From AK Fussion inventory</p>
-    <h2>Live catalog for {{ brand.legalName }}</h2>
-    <p>Categories and products load from cursor-node-api. Guest cart stays on this device.</p>
-    <a mat-flat-button color="accent" routerLink="/shop">Browse all products</a>
-  </div>
-  <img
-    [src]="catalog.allCategories()[0]?.image || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1000&q=80'"
-    [alt]="brand.legalName"
-    loading="lazy"
-  />
-</section>
-
-<section class="wrap section">
-  <div class="section-head">
-    <div>
-      <p class="eyebrow">New arrivals</p>
-      <h2>Fresh stock on the floor</h2>
-    </div>
-  </div>
-  <div class="product-grid">
-    @for (product of catalog.newArrivals(); track product.id) {
-      <app-product-card [product]="product" />
+<section class="wrap budget">
+  <h2>Shop by category</h2>
+  <div class="budget-grid">
+    @for (category of catalog.allCategories(); track category.id) {
+      <a [routerLink]="['/shop', category.slug]">
+        <img [src]="category.image" [alt]="category.name" loading="lazy" />
+        <div>
+          <strong>{{ category.name }}</strong>
+          <span>{{ category.description }}</span>
+        </div>
+      </a>
     }
   </div>
 </section>

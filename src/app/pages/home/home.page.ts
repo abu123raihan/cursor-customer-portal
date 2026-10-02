@@ -1,88 +1,80 @@
-import { Component, OnDestroy, OnInit, computed, inject, signal } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
+import { Component, computed, inject, signal } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
+import { STATIC_BANNERS, STORE_BRAND } from "../../core/catalog/catalog.data";
 import { CatalogService } from "../../core/catalog/catalog.service";
-import { STORE_BRAND } from "../../core/catalog/catalog.data";
 import { ProductCardComponent } from "../../shared/product-card/product-card.component";
 
 @Component({
   selector: "app-home-page",
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatIconModule, ProductCardComponent],
+  imports: [FormsModule, RouterLink, ProductCardComponent],
   templateUrl: "./home.page.html",
   styleUrl: "./home.page.scss"
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage {
   readonly catalog = inject(CatalogService);
   readonly brand = STORE_BRAND;
-  readonly slideIndex = signal(0);
+  readonly banners = STATIC_BANNERS;
 
-  readonly slides = computed(() => {
-    const name = this.brand.legalName;
-    const cats = this.catalog.allCategories();
-    const first = cats[0];
-    const second = cats[1];
-    return [
-      {
-        eyebrow: name,
-        title: `Shop ${name} online`,
-        text: "Guest catalog synced from AK Fussion inventory. Add to cart without signing in.",
-        cta: "Shop bestsellers",
-        link: "/shop",
-        image:
-          first?.image ??
-          "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1600&q=80"
-      },
-      {
-        eyebrow: first?.name ?? "Categories",
-        title: first ? `Browse ${first.name}` : "Browse the catalogue",
-        text: first?.description || "Categories and products from cursor-node-api.",
-        cta: first ? `Shop ${first.name}` : "View all",
-        link: first ? `/shop/${first.slug}` : "/shop",
-        image:
-          first?.image ??
-          "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80"
-      },
-      {
-        eyebrow: second?.name ?? "More to explore",
-        title: second ? `${second.name} essentials` : "Trade support & GST invoices",
-        text: second?.description || "Sign in at checkout for orders and invoice download.",
-        cta: second ? `Shop ${second.name}` : "Contact us",
-        link: second ? `/shop/${second.slug}` : "/contact",
-        image:
-          second?.image ??
-          "https://images.unsplash.com/photo-1473341304170-971dccb5ce1e?auto=format&fit=crop&w=1600&q=80"
-      }
-    ];
+  readonly filterCategory = signal<string>("all");
+  readonly filterSort = signal<"default" | "price-asc" | "price-desc" | "rating" | "discount">("default");
+  readonly filterMinRating = signal<number>(0);
+  readonly filterMaxPrice = signal<number>(2000);
+  readonly filterOnSale = signal(false);
+
+  readonly priceCeiling = computed(() => Math.max(this.catalog.maxPrice(), 500));
+
+  readonly filteredProducts = computed(() => {
+    const cat = this.filterCategory();
+    let list =
+      cat === "all" ? this.catalog.allProducts() : this.catalog.byCategory(cat);
+
+    const maxPrice = this.filterMaxPrice();
+    list = list.filter((p) => p.price <= maxPrice);
+
+    const minRating = this.filterMinRating();
+    if (minRating > 0) {
+      list = list.filter((p) => p.rating >= minRating);
+    }
+
+    if (this.filterOnSale()) {
+      list = list.filter((p) => !!p.compareAtPrice && p.compareAtPrice > p.price);
+    }
+
+    switch (this.filterSort()) {
+      case "price-asc":
+        list = [...list].sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        list = [...list].sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        list = [...list].sort((a, b) => b.rating - a.rating);
+        break;
+      case "discount":
+        list = [...list].sort((a, b) => {
+          const da = a.compareAtPrice ? 1 - a.price / a.compareAtPrice : 0;
+          const db = b.compareAtPrice ? 1 - b.price / b.compareAtPrice : 0;
+          return db - da;
+        });
+        break;
+      default:
+        break;
+    }
+
+    return list;
   });
 
-  private timer?: ReturnType<typeof setInterval>;
-
-  ngOnInit(): void {
-    this.timer = setInterval(() => {
-      const len = this.slides().length || 1;
-      this.slideIndex.update((i) => (i + 1) % len);
-    }, 5500);
+  setCategory(slug: string): void {
+    this.filterCategory.set(slug);
   }
 
-  ngOnDestroy(): void {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-  }
-
-  go(index: number): void {
-    this.slideIndex.set(index);
-  }
-
-  next(): void {
-    const len = this.slides().length || 1;
-    this.slideIndex.update((i) => (i + 1) % len);
-  }
-
-  prev(): void {
-    const len = this.slides().length || 1;
-    this.slideIndex.update((i) => (i - 1 + len) % len);
+  clearFilters(): void {
+    this.filterCategory.set("all");
+    this.filterSort.set("default");
+    this.filterMinRating.set(0);
+    this.filterMaxPrice.set(this.priceCeiling());
+    this.filterOnSale.set(false);
   }
 }

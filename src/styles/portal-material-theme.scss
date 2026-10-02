@@ -6,10 +6,13 @@ html {
     (
       color: (
         theme-type: light,
-        primary: mat.$green-palette,
-        tertiary: mat.$red-palette
+        primary: mat.$rose-palette,
+        tertiary: mat.$azure-palette
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: Poppins,
+        brand-family: Poppins
+      ),
       density: -1
     )
   );

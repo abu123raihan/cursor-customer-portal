@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: "",
     component: StoreShellComponent,
     children: [
-      { path: "", pathMatch: "full", redirectTo: "shop" },
+      { path: "", pathMatch: "full", redirectTo: "home" },
       { path: "home", component: HomePage },
       { path: "products", redirectTo: "shop" },
       { path: "shop", component: ShopPage },

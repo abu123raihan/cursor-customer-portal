@@ -1,38 +1,27 @@
-.wrap {
-  width: var(--portal-wrap);
-  margin-inline: auto;
-}
-
 .page {
-  padding: 2.5rem 0 3rem;
+  padding-block: 2rem 3rem;
 }
 
 .layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: start;
 }
 
 .eyebrow {
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--portal-primary);
-}
-
-h1,
-h2 {
-  font-family: var(--portal-font);
-  color: var(--portal-ink);
-  font-weight: 500;
 }
 
 h1 {
   margin: 0.35rem 0 0.75rem;
-  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 600;
 }
 
 p,
@@ -40,25 +29,21 @@ li {
   color: var(--portal-ink-secondary);
 }
 
-ul {
-  margin: 1rem 0 1.5rem;
-  padding-left: 1.1rem;
-}
-
 .card {
   background: var(--portal-card);
-  border-radius: var(--portal-radius-lg);
-  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  padding: 1.35rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
   box-shadow: var(--portal-shadow);
 }
 
 .hint {
   margin: 0.5rem 0 0;
   font-size: 0.85rem;
-  color: var(--portal-faint);
+  color: var(--portal-muted);
 }
 
 .hint .linkish {
@@ -73,10 +58,6 @@ ul {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
-}
-
-.hint .linkish:hover {
-  color: var(--portal-primary-dark);
 }
 
 .meta {

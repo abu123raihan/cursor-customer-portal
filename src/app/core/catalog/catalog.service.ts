@@ -1,22 +1,21 @@
-import { Injectable, computed, inject, signal } from "@angular/core";
-import { catchError, of, tap } from "rxjs";
-import { ApiService } from "../api/api.service";
-import { PublicStore, PublicStoreCategory, PublicStoreProduct } from "../api/api.models";
-import { STORE_BRAND } from "./catalog.data";
+import { Injectable, computed, signal } from "@angular/core";
+import { STATIC_CATEGORIES, STATIC_PRODUCTS, STORE_BRAND } from "./catalog.data";
 import { StoreCategory, StoreProduct } from "./product.model";
 
+/**
+ * Demo catalog is static (Meesho-style marketplace UI).
+ * API catalog can be re-enabled later without changing page contracts.
+ */
 @Injectable({ providedIn: "root" })
 export class CatalogService {
-  private readonly api = inject(ApiService);
-
-  private readonly products = signal<StoreProduct[]>([]);
-  private readonly categories = signal<StoreCategory[]>([]);
+  private readonly products = signal<StoreProduct[]>([...STATIC_PRODUCTS]);
+  private readonly categories = signal<StoreCategory[]>([...STATIC_CATEGORIES]);
   private readonly storeName = signal<string>(STORE_BRAND.name);
   private readonly storeCurrency = signal<string>("INR");
 
-  readonly loading = signal(true);
+  readonly loading = signal(false);
   readonly loadError = signal<string | null>(null);
-  readonly ready = signal(false);
+  readonly ready = signal(true);
 
   readonly allProducts = computed(() => this.products());
   readonly allCategories = computed(() => this.categories());
@@ -29,7 +28,7 @@ export class CatalogService {
     return (tagged.length ? tagged : list).slice(0, 8);
   });
 
-  readonly newArrivals = computed(() => this.products().slice(0, 4));
+  readonly newArrivals = computed(() => this.products().slice(0, 8));
 
   readonly maxPrice = computed(() => {
     const prices = this.products().map((p) => p.price);
@@ -39,29 +38,13 @@ export class CatalogService {
     return Math.ceil(Math.max(...prices) / 100) * 100 || 1000;
   });
 
-  constructor() {
-    this.reload();
-  }
-
   reload(): void {
-    this.loading.set(true);
+    this.products.set([...STATIC_PRODUCTS]);
+    this.categories.set([...STATIC_CATEGORIES]);
+    this.storeName.set(STORE_BRAND.name);
+    this.loading.set(false);
+    this.ready.set(true);
     this.loadError.set(null);
-    this.api
-      .getPublicStore()
-      .pipe(
-        tap((envelope) => this.applyStore(envelope.data)),
-        catchError((err: unknown) => {
-          const message =
-            err && typeof err === "object" && "message" in err
-              ? String((err as { message: unknown }).message)
-              : "Could not load store catalog from API.";
-          this.loadError.set(message);
-          this.loading.set(false);
-          this.ready.set(true);
-          return of(null);
-        })
-      )
-      .subscribe();
   }
 
   byCategory(slug: string | null): StoreProduct[] {
@@ -103,47 +86,5 @@ export class CatalogService {
 
   categoryBySlug(slug: string): StoreCategory | undefined {
     return this.categories().find((c) => c.slug === slug);
-  }
-
-  private applyStore(store: PublicStore): void {
-    this.storeName.set(store.name || STORE_BRAND.name);
-    this.storeCurrency.set("INR");
-    this.categories.set(store.categories.map((c) => this.mapCategory(c)));
-    this.products.set((store.products?.length ? store.products : store.catalog).map((p) => this.mapProduct(p)));
-    this.loading.set(false);
-    this.ready.set(true);
-    this.loadError.set(null);
-  }
-
-  private mapCategory(c: PublicStoreCategory): StoreCategory {
-    return {
-      id: c.id,
-      name: c.name,
-      slug: c.slug,
-      description: c.description ?? "",
-      image: c.image
-    };
-  }
-
-  private mapProduct(p: PublicStoreProduct): StoreProduct {
-    return {
-      id: p.id,
-      sku: p.sku,
-      name: p.name,
-      slug: p.slug,
-      categoryId: p.categoryId,
-      brand: p.brand || "Store",
-      description: p.description ?? "",
-      price: Number(p.price),
-      compareAtPrice: p.compareAtPrice != null ? Number(p.compareAtPrice) : undefined,
-      currency: "INR",
-      unit: p.unit || "pcs",
-      rating: p.rating ?? 0,
-      reviewCount: p.reviewCount ?? 0,
-      inStock: p.inStock !== false,
-      badge: p.badge,
-      image: p.image,
-      features: p.features ?? []
-    };
   }
 }
