@@ -1,0 +1,12 @@
+---
+description: Website Agent folder and git default branch
+alwaysApply: true
+---
+
+# Website Agent — folder and branch
+
+- This agent is **Website Agent** / **Website portal**.
+- Always work only in **`cursor-customer-portal`** (`D:\Cursor\cursor-customer-portal`).
+- Do not treat other repos as the workspace root for this agent.
+- **`main` is the development branch** and the default branch.
+- Stay on `main` unless the user explicitly asks to switch.
