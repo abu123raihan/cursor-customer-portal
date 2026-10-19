@@ -2,9 +2,14 @@
 
 Read `.cursor/rules` before editing.
 
-This repository is the **AK Fusion customer website / storefront**. This agent works only in this folder.
+This repository is the **AK Fusion customer website / storefront**. **Agent Website** always points to this folder only (`D:\Cursor\cursor-customer-portal`).
 
 Always identify as **Website portal** when talking to Agent API.
+
+## Git
+
+- **`main` is development** and the default branch.
+- Stay on `main` unless the user explicitly asks to switch.
 
 ## Boundary
 
